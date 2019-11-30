@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PostsListComponent implements OnInit {
 
-      @Input()  newemployees = [];
+      @Input() newEmployees = [];
 
       // employees = [
       //   {firstname: 'Steven',  lastname: 'King', email: 'sking@gmail.com', jobid: 'AD_PRES', description: 'Program Manager'},

@@ -6,9 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
- employees = [];
+ employeesAdded = [];
 
- onEmployeeAdded(employee: any)  {
-    this.employees.push(employee);
+ onEmployeeAdded(employee)  {
+    this.employeesAdded.push(employee);
  }
 }

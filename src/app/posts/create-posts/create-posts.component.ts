@@ -6,29 +6,21 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./create-posts.component.css']
 })
 export class CreatePostsComponent implements OnInit {
-  empfname  = '';
-  emplname  = '';
-  empemail  = '';
-  empid = '';
+  @Output() employeeCreated = new EventEmitter();
+  empFName  = '';
+  empLName  = '';
+  empEmail  = '';
+  empId = '';
   description = '';
+  //  enteredValue = '';
 
-  @Output() employeecreated = new EventEmitter();
-  enteredValue = '';
   constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-  onAddPost() {
-    const employee = {
-        empfirstname: this.empfname,
-        emplastname:  this.emplname,
-        empemailid: this.empemail,
-        employeeid: this.empid,
-        description:  this.description
-    };
-    this.employeecreated.emit(employee);
-
+  onAddEmployee() {
+    const employee = { empFirstName: this.empFName, empLastName: this.empLName,
+                  empEmailId: this.empEmail, employeeId: this.empId, description:  this.description };
+    this.employeeCreated.emit(employee);
     //  console.dir(postInput);
     //  alert('post added successfully!!!');
   }
