@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-posts-list',
@@ -7,17 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostsListComponent implements OnInit {
 
-      employees = [
-        {firstname: 'steven',  lastname: 'king', email: 'sking@gmail.com', jobid: 'ad_pres'},
-        {firstname: 'neena',  lastname: 'kochhar', email: 'nkochhar@gmail.com', jobid: 'ad_vp'},
-        {firstname: 'lex',  lastname: 'de haan', email: 'ldehaan@gmail.com', jobid: 'ad_vp'},
-        {firstname: 'alexander',  lastname: 'hunold', email: 'ahunold@gmail.com', jobid: 'it_prog'},
-        {firstname: 'bruce',  lastname: 'ernst', email: 'bernst@gmail.com', jobid: 'ad_pres'}
-      ];
+      @Input()  newemployees = [];
 
-  constructor() { }
+      // employees = [
+      //   {firstname: 'Steven',  lastname: 'King', email: 'sking@gmail.com', jobid: 'AD_PRES', description: 'Program Manager'},
+      //   {firstname: 'Neena',  lastname: 'Kochhar', email: 'nkochhar@gmail.com', jobid: 'AD_VP', description:  'Application Developer'},
+      //   {firstname: 'Lex',  lastname: 'De haan', email: 'ldehaan@gmail.com', jobid: 'AD_VP', description: 'Vice President'},
+      //   {firstname: 'Alexander',  lastname: 'Hunold', email: 'ahunold@gmail.com', jobid: 'IT_PROG', description: 'QA Tester'},
+      //   {firstname: 'Bruce',  lastname: 'Ernst', email: 'bernst@gmail.com', jobid: 'AD_PRES', description: 'Data Analyst'}
+      // ];
+
+  constructor() {
+    // this.newemployees.push(this.employees);
+  }
 
   ngOnInit() {
+    //  this.newemployees.push(this.employees);
   }
 
 }

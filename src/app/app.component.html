@@ -1,6 +1,5 @@
-<!-- <p>Our First App!!!</p> -->
 <app-header></app-header>
 <main>
-    <app-create-posts></app-create-posts>
-    <app-posts-list></app-posts-list>
+    <app-create-posts (employeecreated)="onEmployeeAdded($event)"></app-create-posts>
+    <app-posts-list [newemployees]="employees"></app-posts-list>
 </main>

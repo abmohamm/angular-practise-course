@@ -1,11 +1,14 @@
-<mat-accordion multi="true">
-  <mat-expansion-panel *ngFor="let employee of employees">
+<mat-accordion multi="true" *ngIf="newemployees.length > 0">
+  <mat-expansion-panel *ngFor="let employee of newemployees">
     <mat-expansion-panel-header>
-      <p>{{ employee.firstname }}'s details</p>
+      <p><b>{{ employee.firstname }}'s Details</b></p>
     </mat-expansion-panel-header>
-    <p>First Name : {{ employee.firstname }}</p>
-    <p>Last Name : {{ employee.lastname }}</p>
-    <p>Email : {{ employee.email }}</p>
-    <p>Job Id : {{ employee.jobid }}</p>
+    <p><b>First Name : {{ employee.firstname }}</b></p>
+    <p><b>Last Name : {{ employee.lastname }}</b></p>
+    <p><b>Email : {{ employee.email }}</b></p>
+    <p><b>Job Id : {{ employee.jobid }}</b></p>
+    <p><b>Description : {{ employee.description}}</b></p>
   </mat-expansion-panel>
 </mat-accordion>
+<p class="info-text mat-body-2" *ngIf="newemployees.length <= 0">No Posts are added Yet !!!</p>
+<!-- <p class="mat-body-1"  *ngIf="employees.length <= 0">No Posts are added Yet !!!</p> -->

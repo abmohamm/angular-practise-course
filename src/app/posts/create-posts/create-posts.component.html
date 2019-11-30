@@ -1,13 +1,27 @@
 <mat-card>
+  <!-- <p><b>Employee Details : </b></p> -->
+  <p>Firstname</p>
+  <mat-form-field>
+    <input matInput type="text" [(ngModel)]="empfname"><br>
+  </mat-form-field>
+  <p>Lastname</p>
+  <mat-form-field>
+    <input matInput type="text" [(ngModel)]="emplname"><br>
+  </mat-form-field>
+  <p>Email:</p>
+  <mat-form-field>
+    <input matInput type="text" [(ngModel)]="empemail"><br>
+  </mat-form-field>
+  <p>Id:</p>
+  <mat-form-field>
+    <input matInput type="text" [(ngModel)]="empid"><br>
+  </mat-form-field>
   <p>Description:</p>
   <mat-form-field>
-        <textarea matInput rows="6" [(ngModel)]="enteredValue" #postInput></textarea><br>
-    </mat-form-field>
-    <button mat-raised-button
-            color="primary"
-            (click)="onAddPost(postInput)">Save Post</button>
+    <textarea matInput rows="6" [(ngModel)]="description"></textarea><br>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="onAddPost()">Save</button>
 </mat-card>
-
 <!-- <textarea rows="6" cols="30" [value]="'Test'"> {{newPost}} </textarea><br> -->
 <!-- <textarea rows="6" cols="30" [value]="newPost" #postInput></textarea><br> -->
 <!-- <button (click)="onAddPost(postInput)">Save Post</button> -->
