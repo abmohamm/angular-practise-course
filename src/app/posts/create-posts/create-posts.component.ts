@@ -18,8 +18,11 @@ export class CreatePostsComponent implements OnInit {
   ngOnInit() {}
 
   onAddEmployee() {
-    const employee = { empFirstName: this.empFName, empLastName: this.empLName,
-                  empEmailId: this.empEmail, employeeId: this.empId, description:  this.description };
+    const employee = { empFirstName: this.empFName,
+                       empLastName: this.empLName,
+                       empEmailId: this.empEmail,
+                       employeeId: this.empId,
+                       description:  this.description };
     this.employeeCreated.emit(employee);
     //  console.dir(postInput);
     //  alert('post added successfully!!!');
