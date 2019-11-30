@@ -1,7 +1,7 @@
 <mat-accordion multi="true" *ngIf="newemployees.length > 0">
   <mat-expansion-panel *ngFor="let employee of newemployees">
     <mat-expansion-panel-header>
-      <p><b>{{ employee.firstname }}'s Details</b></p>
+      <p><b>{{ employee.empfname }}'s Details</b></p>
     </mat-expansion-panel-header>
     <p><b>First Name : {{ employee.firstname }}</b></p>
     <p><b>Last Name : {{ employee.lastname }}</b></p>

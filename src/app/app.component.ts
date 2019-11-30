@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
  employees = [];
 
- onEmployeeAdded(employee)  {
+ onEmployeeAdded(employee: any)  {
     this.employees.push(employee);
  }
 }
