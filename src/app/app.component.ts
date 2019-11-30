@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Employee } from './employees/employee.model';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
- employeesAdded = [];
+    employeesAdded: Employee[] = [];
 
- onEmployeeAdded(employee)  {
-    this.employeesAdded.push(employee);
- }
+    onEmployeeAdded(employee: Employee)  {
+        this.employeesAdded.push(employee);
+    }
 }

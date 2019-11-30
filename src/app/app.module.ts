@@ -8,17 +8,17 @@ import { MatInputModule,  MatCardModule,
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CreatePostsComponent } from './posts/create-posts/create-posts.component';
 import { HeaderComponent } from './headers/header/header.component';
-import { PostsListComponent } from './posts/posts-list/posts-list/posts-list.component';
+import { CreateEmployeesComponent } from './employees/create-employees/create-employees.component';
+import { EmployeesListComponent } from './employees/employees-list/employees-list/employees-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreatePostsComponent,
+    CreateEmployeesComponent,
     HeaderComponent,
-    PostsListComponent
+    EmployeesListComponent
   ],
   imports: [
     BrowserModule,  AppRoutingModule, FormsModule,  BrowserAnimationsModule,

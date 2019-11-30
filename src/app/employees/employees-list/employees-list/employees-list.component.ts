@@ -1,13 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Employee } from '../../employee.model';
 
 @Component({
-  selector: 'app-posts-list',
-  templateUrl: './posts-list.component.html',
-  styleUrls: ['./posts-list.component.css']
+  selector: 'app-employees-list',
+  templateUrl: './employees-list.component.html',
+  styleUrls: ['./employees-list.component.css']
 })
-export class PostsListComponent implements OnInit {
+export class EmployeesListComponent implements OnInit {
 
-      @Input() newEmployees = [];
+      @Input() newEmployees: Employee[] = [];
 
       // employees = [
       //   {firstname: 'Steven',  lastname: 'King', email: 'sking@gmail.com', jobid: 'AD_PRES', description: 'Program Manager'},
@@ -17,12 +18,8 @@ export class PostsListComponent implements OnInit {
       //   {firstname: 'Bruce',  lastname: 'Ernst', email: 'bernst@gmail.com', jobid: 'AD_PRES', description: 'Data Analyst'}
       // ];
 
-  constructor() {
-    // this.newemployees.push(this.employees);
-  }
+  constructor() {}
 
-  ngOnInit() {
-    //  this.newemployees.push(this.employees);
-  }
+  ngOnInit() { }
 
 }
