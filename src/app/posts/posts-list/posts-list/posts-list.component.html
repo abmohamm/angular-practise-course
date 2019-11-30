@@ -1,0 +1,11 @@
+<mat-accordion multi="true">
+  <mat-expansion-panel *ngFor="let employee of employees">
+    <mat-expansion-panel-header>
+      <p>{{ employee.firstname }}'s details</p>
+    </mat-expansion-panel-header>
+    <p>First Name : {{ employee.firstname }}</p>
+    <p>Last Name : {{ employee.lastname }}</p>
+    <p>Email : {{ employee.email }}</p>
+    <p>Job Id : {{ employee.jobid }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
