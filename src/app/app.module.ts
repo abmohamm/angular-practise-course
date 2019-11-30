@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './headers/header/header.component';
 import { CreateEmployeesComponent } from './employees/create-employees/create-employees.component';
-import { EmployeesListComponent } from './employees/employees-list/employees-list/employees-list.component';
+import { EmployeesListComponent } from './employees/employees-list/employees-list.component';
 
 
 @NgModule({
