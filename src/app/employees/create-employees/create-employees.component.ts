@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Employee } from '../employee.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-create-employees',
@@ -17,7 +18,7 @@ export class CreateEmployeesComponent implements OnInit {
   constructor() {}
   ngOnInit() {}
 
-  onAddEmployee() {
+  /* onAddEmployee() {
     const employee = { empFirstName: this.empFirstName,
                        empLastName: this.empLastName,
                        empEmailId: this.empEmailId,
@@ -26,5 +27,18 @@ export class CreateEmployeesComponent implements OnInit {
     this.employeeCreated.emit(employee);
     //  console.dir(employeeInput);
     //  alert('employee added successfully!!!');
+  } */
+
+  onAddEmployee(employeeForm: NgForm) {
+    if (employeeForm.invalid) {
+      return;
+    }
+    const employee = {
+        empFirstName: employeeForm.value.empFirstName,
+        empLastName: employeeForm.value.empLastName,
+        empEmailId: employeeForm.value.empEmailId,
+        employeeId: employeeForm.value.employeeId,
+        description: employeeForm.value.description };
+    this.employeeCreated.emit(employee);
   }
 }
