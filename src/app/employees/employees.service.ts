@@ -24,11 +24,8 @@ export class EmployeesService {
     }
 
     addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string) {
-        const employee: Employee = {  empFirstName: empFName,
-                                      empLastName: empLName,
-                                      empEmailId: empEmaId,
-                                      employeeId: empId,
-                                      description: descriptionn };
+        const employee: Employee = {  empFirstName: empFName, empLastName: empLName, empEmailId: empEmaId,
+                                      employeeId: empId, description: descriptionn };
         this.employees.push(employee);
         this.employeesUpdated.next([...this.employees]);
     }

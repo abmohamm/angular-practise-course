@@ -21,12 +21,8 @@ export class CreateEmployeesComponent implements OnInit {
   }
   ngOnInit() {}
 
-  /* onAddEmployee() {
-    const employee = { empFirstName: this.empFirstName,
-                       empLastName: this.empLastName,
-                       empEmailId: this.empEmailId,
-                       employeeId: this.employeeId,
-                       description:  this.description };
+  /* onAddEmployee() {const employee = { empFirstName: this.empFirstName, empLastName: this.empLastName,
+      empEmailId: this.empEmailId, employeeId: this.employeeId, description:  this.description };
     this.employeeCreated.emit(employee);
     //  console.dir(employeeInput);
     //  alert('employee added successfully!!!');
@@ -36,16 +32,11 @@ export class CreateEmployeesComponent implements OnInit {
     if (employeeForm.invalid) {
       return;
     }
-    /* const employee = {
-        empFirstName: employeeForm.value.empFirstName,
-        empLastName: employeeForm.value.empLastName,
-        empEmailId: employeeForm.value.empEmailId,
-        employeeId: employeeForm.value.employeeId,
-        description: employeeForm.value.description }; */
-    this.employeesService.addEmployee(  employeeForm.value.empFirstName,
-                                        employeeForm.value.empLastName,
-                                        employeeForm.value.empEmailId,
-                                        employeeForm.value.employeeId,
-                                        employeeForm.value.description  );
+    /* const employee = { empFirstName: employeeForm.value.empFirstName,
+  empLastName: employeeForm.value.empLastName, empEmailId: employeeForm.value.empEmailId,
+  employeeId: employeeForm.value.employeeId, description: employeeForm.value.description }; */
+    this.employeesService.addEmployee( employeeForm.value.empFirstName, employeeForm.value.empLastName,
+                                       employeeForm.value.empEmailId, employeeForm.value.employeeId,
+                                       employeeForm.value.description );
   }
 }

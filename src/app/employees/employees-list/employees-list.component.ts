@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Employee } from '../employee.model';
 import { EmployeesService } from '../employees.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-employees-list',
   templateUrl: './employees-list.component.html',
   styleUrls: ['./employees-list.component.css']
 })
-export class EmployeesListComponent implements OnInit {
+export class EmployeesListComponent implements OnInit, OnDestroy {
 
-      // @Input() newEmployees: Employee[] = [];
-      newEmployees: Employee[] = [];
-      employeesService: EmployeesService;
-      private employeeSubscription: Subscription
+  // @Input() newEmployees: Employee[] = [];
+  newEmployees: Employee[] = [];
+  employeesService: EmployeesService;
+  private employeeSubscription: Subscription;
+
+  constructor(employeesService: EmployeesService) {
+    this.employeesService = employeesService;
+  }
 
       // employees = [
       //   {firstname: 'Steven',  lastname: 'King', email: 'sking@gmail.com', jobid: 'AD_PRES', description: 'Program Manager'},
@@ -22,16 +27,16 @@ export class EmployeesListComponent implements OnInit {
       //   {firstname: 'Bruce',  lastname: 'Ernst', email: 'bernst@gmail.com', jobid: 'AD_PRES', description: 'Data Analyst'}
       // ];
 
-  constructor(employeesService: EmployeesService) {
-    this.employeesService = employeesService;
-  }
-
   ngOnInit() {
     this.newEmployees = this.employeesService.getEmployees();
-    this.employeesService.getEmployeesUpdated()
-        .subscribe((newEmployees: Employee[]) => {
-              this.newEmployees = newEmployees;
-        });
+    this.employeeSubscription = this.employeesService.getEmployeesUpdated()
+        .subscribe((employees: Employee[]) => {
+              this.newEmployees = employees;
+      });
+  }
+
+  ngOnDestroy() {
+      this.employeeSubscription.unsubscribe();
   }
 
 }
