@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './headers/header/header.component';
 import { CreateEmployeesComponent } from './employees/create-employees/create-employees.component';
 import { EmployeesListComponent } from './employees/employees-list/employees-list.component';
+import { EmployeesService } from './employees/employees.service';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { EmployeesListComponent } from './employees/employees-list/employees-lis
     BrowserModule,  AppRoutingModule, FormsModule,  BrowserAnimationsModule,
     MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,  MatExpansionModule
   ],
+  // providers: [EmployeesService],
   providers: [],
   bootstrap: [AppComponent]
 })

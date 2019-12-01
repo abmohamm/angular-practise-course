@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { Employee } from '../employee.model';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { EmployeesService } from '../employees.service';
 
 @Component({
   selector: 'app-create-employees',
@@ -8,14 +8,17 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./create-employees.component.css']
 })
 export class CreateEmployeesComponent implements OnInit {
-  @Output() employeeCreated = new EventEmitter<Employee>();
+ // @Output() employeeCreated = new EventEmitter<Employee>();
   empFirstName  = '';
   empLastName  = '';
   empEmailId  = '';
   employeeId = '';
   description = '';
+  employeesService: EmployeesService;
 
-  constructor() {}
+  constructor(employeesService: EmployeesService) {
+    this.employeesService = employeesService;
+  }
   ngOnInit() {}
 
   /* onAddEmployee() {
@@ -33,12 +36,16 @@ export class CreateEmployeesComponent implements OnInit {
     if (employeeForm.invalid) {
       return;
     }
-    const employee = {
+    /* const employee = {
         empFirstName: employeeForm.value.empFirstName,
         empLastName: employeeForm.value.empLastName,
         empEmailId: employeeForm.value.empEmailId,
         employeeId: employeeForm.value.employeeId,
-        description: employeeForm.value.description };
-    this.employeeCreated.emit(employee);
+        description: employeeForm.value.description }; */
+    this.employeesService.addEmployee(  employeeForm.value.empFirstName,
+                                        employeeForm.value.empLastName,
+                                        employeeForm.value.empEmailId,
+                                        employeeForm.value.employeeId,
+                                        employeeForm.value.description  );
   }
 }
