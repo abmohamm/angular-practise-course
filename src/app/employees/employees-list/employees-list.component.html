@@ -10,6 +10,10 @@
     <p><b>Email : {{ employee.empEmailId }}</b></p>
     <p><b>Job Id : {{ employee.employeeId }}</b></p>
     <p><b>Description : {{ employee.description}}</b></p>
+    <mat-action-row>
+      <button mat-button color="primary">Edit</button>
+      <button mat-button color="warn">Delete</button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 <p class="info-text mat-body-2" *ngIf="newEmployees.length <= 0">No Employees are added Yet !!!</p>

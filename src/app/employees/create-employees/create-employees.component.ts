@@ -38,5 +38,6 @@ export class CreateEmployeesComponent implements OnInit {
     this.employeesService.addEmployee( employeeForm.value.empFirstName, employeeForm.value.empLastName,
                                        employeeForm.value.empEmailId, employeeForm.value.employeeId,
                                        employeeForm.value.description );
+    employeeForm.reset();
   }
 }
