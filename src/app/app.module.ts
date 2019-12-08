@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule,  MatCardModule,
          MatButtonModule, MatToolbarModule,
@@ -23,7 +24,7 @@ import { EmployeesService } from './employees/employees.service';
   ],
   imports: [
     BrowserModule,  AppRoutingModule, FormsModule,  BrowserAnimationsModule,
-    MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,  MatExpansionModule
+    MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,  MatExpansionModule, HttpClientModule
   ],
   // providers: [EmployeesService],
   providers: [],

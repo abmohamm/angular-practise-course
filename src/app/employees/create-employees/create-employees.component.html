@@ -9,35 +9,35 @@
     <!-- <p>Firstname</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empFirstName"><br> -->
-    <input matInput type="text" name="empFirstName" ngModel required placeholder="First Name" #empFirstName="ngModel">
+    <input style="text-transform:capitalize;" matInput type="text" name="empFirstName" ngModel required placeholder="First Name" #empFirstName="ngModel">
     <mat-error *ngIf="empFirstName.invalid">Please enter First Name</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empFirstName').invalid">Please enter First Name</mat-error> -->
   </mat-form-field>
   <!-- <p>Lastname</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empLastName"><br> -->
-    <input matInput type="text" name="empLastName" ngModel required placeholder="Last Name" #empLastName="ngModel">
+    <input style="text-transform:capitalize;" matInput type="text" name="empLastName" ngModel required placeholder="Last Name" #empLastName="ngModel">
     <mat-error *ngIf="empLastName.invalid">Please enter Last Name</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empLastName').invalid">Please enter Last Name</mat-error> -->
   </mat-form-field>
   <!-- <p>Email:</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empEmailId"><br> -->
-    <input matInput type="text" name="empEmailId" ngModel required placeholder="Email Id" #empEmailId="ngModel">
+    <input style="text-transform:capitalize;" matInput type="text" name="empEmailId" ngModel required placeholder="Email Id" #empEmailId="ngModel">
     <mat-error *ngIf="empEmailId.invalid">Please enter Email Id</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empEmailId').invalid">Please enter Email Id</mat-error> -->
   </mat-form-field>
   <!-- <p>Id:</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="employeeId"><br> -->
-    <input matInput type="text" name="employeeId" ngModel required placeholder="Employee Id" #employeeId="ngModel">
+    <input style="text-transform:capitalize;" matInput type="text" name="employeeId" ngModel required placeholder="Employee Id" #employeeId="ngModel">
     <mat-error *ngIf="employeeId.invalid">Please enter Employee Id</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('employeeId').invalid">Please enter Employee Id</mat-error> -->
   </mat-form-field>
   <!-- <p>Description:</p> -->
   <mat-form-field>
     <!-- <textarea matInput rows="6" [(ngModel)]="description"></textarea><br> -->
-    <textarea matInput rows="4" name="description" ngModel required placeholder="Description" #description="ngModel"></textarea>
+    <textarea style="text-transform:capitalize;" matInput rows="4" name="description" ngModel required placeholder="Description" #description="ngModel"></textarea>
     <mat-error *ngIf="description.invalid">Please enter Description</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('description').invalid">Please enter Description</mat-error> -->
   </mat-form-field>

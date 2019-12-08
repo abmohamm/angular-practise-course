@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Employee } from './employee.model';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeesService {
 
+  GET_API_URL: 'http://localhost:3000/api/employees';
+
   private employees: Employee[] = [];
   private employeesUpdated = new Subject<Employee[]>();
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
 //  Below method returns copy of original employees array declared as private.
 //  Adding/Removing elements to/from below returning array will not effect original
 //  private array - suggested approach
     getEmployees() {
+        return this.http.get<{message: string, status: string, employees: Employee[]}>(this.GET_API_URL)
+          .subscribe((response) => {
+              this.employees = response.employees;
+              this.employeesUpdated.next([...this.employees]);
+        });
         // return [...this.employees];
-        return this.employees;
+        // return this.employees;
     }
 
     getEmployeesUpdated() {

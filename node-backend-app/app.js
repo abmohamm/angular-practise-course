@@ -2,6 +2,13 @@ const express = require('express');
 
 const app = express();
 
+app.use((request, response, next) => {
+    request.setHeader("Access-Control-Allow-Origin","*");
+    request.setHeader("Access-Control-Allow-Header","Origin,X-Requested-With,Content-Type,Accept");
+    request.setHeader("Access-Control-Allow-Methods","GET,POST,PATCH,DELETE,OPTIONS,PUT");
+    next();
+});
+
 app.use('/api/employees', (request,response,next) => {
     const employees = [
             {firstname: 'Steven', lastname: 'King', email: 'sking@gmail.com', jobid: 'AD_PRES', description: 'Program Manager'},
