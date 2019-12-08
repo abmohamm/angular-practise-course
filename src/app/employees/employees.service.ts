@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EmployeesService {
 
-  GET_API_URL: 'http://localhost:3000/api/employees';
+  API_URL: 'http://localhost:3000/api/employees';
 
   private employees: Employee[] = [];
   private employeesUpdated = new Subject<Employee[]>();
@@ -18,7 +18,7 @@ export class EmployeesService {
 //  Adding/Removing elements to/from below returning array will not effect original
 //  private array - suggested approach
     getEmployees() {
-        return this.http.get<{message: string, status: string, employees: Employee[]}>(this.GET_API_URL)
+        return this.http.get<{message: string, status: string, employees: Employee[]}>(this.API_URL)
           .subscribe((response) => {
               this.employees = response.employees;
               this.employeesUpdated.next([...this.employees]);
@@ -34,7 +34,12 @@ export class EmployeesService {
     addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string) {
         const employee: Employee = {  empFirstName: empFName, empLastName: empLName, empEmailId: empEmaId,
                                       employeeId: empId, description: descriptionn };
-        this.employees.push(employee);
-        this.employeesUpdated.next([...this.employees]);
+        this.http.post<{message: string, status: string, employees: Employee[]}>(this.API_URL, employee)
+            .subscribe((response) => {
+                console.log(response.message);
+                console.log(response.status);
+                this.employees.push(employee);
+                this.employeesUpdated.next([...this.employees]);
+        });
     }
 }
