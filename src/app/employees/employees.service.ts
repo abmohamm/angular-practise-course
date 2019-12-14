@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Employee } from './employee.model';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -18,11 +19,22 @@ export class EmployeesService {
 //  Adding/Removing elements to/from below returning array will not effect original
 //  private array - suggested approach
     getEmployees() {
-        return this.http.get<{message: string, status: string, employees: Employee[]}>(this.API_URL)
-          .subscribe((response) => {
-              this.employees = response.employees;
-              this.employeesUpdated.next([...this.employees]);
-        });
+        return this.http.get<{message: string, status: string, employees: any}>(this.API_URL)
+                        .pipe(map((employeeData) => {
+                            return employeeData.employees.map(employee => {
+                               return {
+                                  empFirstName: employee.empFirstName,
+                                  empLastName: employee.empLastName,
+                                  empEmailId: employee.empEmailId,
+                                  employeeId: employee.employeeId,
+                                  description:  employee.description
+                               };
+                            });
+                        }))
+                        .subscribe((employees) => {
+                            this.employees = employees;
+                            this.employeesUpdated.next([...this.employees]);
+                      });
         // return [...this.employees];
         // return this.employees;
     }

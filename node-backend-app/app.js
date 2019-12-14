@@ -44,13 +44,15 @@ app.get("/api/employees", (request,response,next) => {
   //         {firstname: 'Alexander', lastname: 'Hunold', email: 'ahunold@gmail.com', jobid: 'IT_PROG', description: 'QA Tester'},
   //         {firstname: 'Bruce', lastname: 'Ernst', email: 'bernst@gmail.com', jobid: 'AD_PRES', description: 'Data Analyst'}
   // ];
-
-  response.status(200).json({
-      message: "Records retrieved successfully",
-      status: "OK",
-      employees: employees
-
+  Employee.find()
+          .then((documents) => {
+              console.log("Data Retrieved : " + documents);
+              response.status(200).json({
+                message: "Records retrieved successfully",
+                status: "OK",
+                employees: documents
+            });
+          });
   });
-});
 
 module.exports = app;
