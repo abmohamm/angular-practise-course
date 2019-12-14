@@ -58,7 +58,9 @@ export class EmployeesService {
     deleteEmployee(employeeId: string) {
         this.http.delete(this.API_URL + employeeId)
         .subscribe(() => {
-            console.log('Deleted !!!');
+            const updatedEmployees = this.employees.filter(employee => employee.employeeId !== employeeId);
+            this.employees = updatedEmployees;
+            this.employeesUpdated.next([...this.employees]);
         });
     }
 }
