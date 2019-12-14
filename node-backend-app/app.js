@@ -1,12 +1,20 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const Employee = require("./models/employee");
 
 const app = express();
+mongoose.connect("mongodb+srv://admin:5ZXMq7Mphz2A4oHY@testcluster-hqygl.mongodb.net/test?retryWrites=true&w=majority");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.post("/api/employees", (request,response,next) => {
-    const employee = request.body;
+    //  const employee = request.body;
+    const employee = new Employee({firstname: request.body.firstname,
+                                   lastname: request.body.lastname,
+                                   email: request.body.email,
+                                   jobid: request.body.jobid,
+                                   description: request.body.description});
     console.log("Employee Details : " + employee);
     response.status(201).json({
       message: "Records stored successfully",
@@ -16,9 +24,9 @@ app.post("/api/employees", (request,response,next) => {
 });
 
 app.use((request, response, next) => {
-    request.setHeader("Access-Control-Allow-Origin","*");
-    request.setHeader("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
-    request.setHeader("Access-Control-Allow-Methods","GET,POST,PATCH,DELETE,OPTIONS,PUT");
+    response.setHeader("Access-Control-Allow-Origin","*");
+    response.setHeader("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+    response.setHeader("Access-Control-Allow-Methods","GET,POST,PATCH,DELETE,OPTIONS,PUT");
     next();
 });
 app.get("/api/employees", (request,response,next) => {
