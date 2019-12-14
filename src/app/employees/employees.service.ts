@@ -46,10 +46,12 @@ export class EmployeesService {
     addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string) {
         const employee: Employee = {  empFirstName: empFName, empLastName: empLName, empEmailId: empEmaId,
                                       employeeId: empId, description: descriptionn };
-        this.http.post<{message: string, status: string, employees: Employee[]}>(this.API_URL, employee)
+        this.http.post<{message: string, status: string, id: string}>(this.API_URL, employee)
             .subscribe((response) => {
                 console.log(response.message);
                 console.log(response.status);
+                const id = response.id;
+                //  employee.id = id;//mongodb creates a new id for every document
                 this.employees.push(employee);
                 this.employeesUpdated.next([...this.employees]);
         });

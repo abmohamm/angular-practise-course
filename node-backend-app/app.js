@@ -22,12 +22,14 @@ app.post("/api/employees", (request,response,next) => {
                                    jobid: request.body.jobid,
                                    description: request.body.description});
     console.log("Employee Details : " + employee);
-    employee.save(); // This Command will insert a document into database.
-    response.status(201).json({
-      message: "Records stored successfully",
-      status: "OK",
-      employees: employees
-  });
+    employee.save()   // This Command will insert a document into database.
+            .then(createdEmployee => {
+              response.status(201).json({
+                message: "Records stored successfully",
+                status: "OK",
+                id: createdEmployee._id
+            });
+      });
 });
 
 app.use((request, response, next) => {
