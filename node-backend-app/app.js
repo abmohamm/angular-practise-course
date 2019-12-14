@@ -36,6 +36,7 @@ app.use((request, response, next) => {
     response.setHeader("Access-Control-Allow-Methods","GET,POST,PATCH,DELETE,OPTIONS,PUT");
     next();
 });
+
 app.get("/api/employees", (request,response,next) => {
   // const employees = [
   //         {firstname: 'Steven', lastname: 'King', email: 'sking@gmail.com', jobid: 'AD_PRES', description: 'Program Manager'},
@@ -53,6 +54,18 @@ app.get("/api/employees", (request,response,next) => {
                 employees: documents
             });
           });
-  });
+});
+
+app.delete("/api/employees/:id",(request, response, next) => {
+    console.log("Id : "+request.params.id);
+    Employee.deleteOne({_id: request.params.id})
+            .then(result => {
+                consule.log('Result : ' + result);
+                response.status(200).json({
+                  message: "Records deleted successfully",
+                  status: "OK"
+          });
+    });
+});
 
 module.exports = app;

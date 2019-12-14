@@ -12,7 +12,7 @@
     <p style="text-transform:capitalize;"><b>Description : {{ employee.description}}</b></p>
     <mat-action-row>
       <button mat-button color="primary">Edit</button>
-      <button mat-button color="warn">Delete</button>
+      <button mat-button color="warn" (click)="onDelete(employee.employeeId)">Delete</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

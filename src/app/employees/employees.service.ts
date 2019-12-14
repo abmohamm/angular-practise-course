@@ -54,4 +54,11 @@ export class EmployeesService {
                 this.employeesUpdated.next([...this.employees]);
         });
     }
+
+    deleteEmployee(employeeId: string) {
+        this.http.delete(this.API_URL + employeeId)
+        .subscribe(() => {
+            console.log('Deleted !!!');
+        });
+    }
 }
