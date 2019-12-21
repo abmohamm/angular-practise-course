@@ -43,6 +43,11 @@ export class EmployeesService {
       return this.employeesUpdated.asObservable();
     }
 
+    getEmployee(empId: string) {
+      return {...this.employees.find(employee => employee.employeeId === empId)};
+
+    }
+
     addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string) {
         const employee: Employee = {  empFirstName: empFName, empLastName: empLName, empEmailId: empEmaId,
                                       employeeId: empId, description: descriptionn };

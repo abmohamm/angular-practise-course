@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeesService } from '../employees.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Employee } from '../employee.model';
 
 @Component({
   selector: 'app-create-employees',
@@ -15,11 +17,25 @@ export class CreateEmployeesComponent implements OnInit {
   employeeId = '';
   description = '';
   employeesService: EmployeesService;
+  private mode = 'create';
+  private empId: string;
+  private employee: Employee;
 
-  constructor(employeesService: EmployeesService) {
+  constructor(employeesService: EmployeesService, public route: ActivatedRoute) {
     this.employeesService = employeesService;
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+        if (paramMap.has('employeeId')) {
+            this.mode = 'edit';
+            this.empId = paramMap.get('employeeId');
+            this.employee = this.employeesService.getEmployee(this.empId);
+        } else {
+            this.mode = 'create';
+            this.empId = null;
+        }
+    });
+  }
 
   /* onAddEmployee() {const employee = { empFirstName: this.empFirstName, empLastName: this.empLastName,
       empEmailId: this.empEmailId, employeeId: this.employeeId, description:  this.description };
