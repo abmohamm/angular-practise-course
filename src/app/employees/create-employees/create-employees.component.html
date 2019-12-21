@@ -9,7 +9,7 @@
     <!-- <p>Firstname</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empFirstName"><br> -->
-    <input style="text-transform:capitalize;" matInput type="text" name="empFirstName" [ngModel]="employee.empFirstName"
+    <input style="text-transform:capitalize;" matInput type="text" name="empFirstName" [ngModel]="employee?.empFirstName"
             required placeholder="First Name" #empFirstName="ngModel">
     <mat-error *ngIf="empFirstName.invalid">Please enter First Name</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empFirstName').invalid">Please enter First Name</mat-error> -->
@@ -17,7 +17,7 @@
   <!-- <p>Lastname</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empLastName"><br> -->
-    <input style="text-transform:capitalize;" matInput type="text" name="empLastName" [ngModel]="employee.empLastName"
+    <input style="text-transform:capitalize;" matInput type="text" name="empLastName" [ngModel]="employee?.empLastName"
             required placeholder="Last Name" #empLastName="ngModel">
     <mat-error *ngIf="empLastName.invalid">Please enter Last Name</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empLastName').invalid">Please enter Last Name</mat-error> -->
@@ -25,7 +25,7 @@
   <!-- <p>Email:</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empEmailId"><br> -->
-    <input style="text-transform:capitalize;" matInput type="text" name="empEmailId" [ngModel]="employee.empEmailId"
+    <input style="text-transform:capitalize;" matInput type="text" name="empEmailId" [ngModel]="employee?.empEmailId"
             required placeholder="Email Id" #empEmailId="ngModel">
     <mat-error *ngIf="empEmailId.invalid">Please enter Email Id</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empEmailId').invalid">Please enter Email Id</mat-error> -->
@@ -33,7 +33,7 @@
   <!-- <p>Id:</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="employeeId"><br> -->
-    <input style="text-transform:capitalize;" matInput type="text" name="employeeId" [ngModel]="employee.employeeId"
+    <input style="text-transform:capitalize;" matInput type="text" name="employeeId" [ngModel]="employee?.employeeId"
             required placeholder="Employee Id" #employeeId="ngModel">
     <mat-error *ngIf="employeeId.invalid">Please enter Employee Id</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('employeeId').invalid">Please enter Employee Id</mat-error> -->
@@ -41,7 +41,7 @@
   <!-- <p>Description:</p> -->
   <mat-form-field>
     <!-- <textarea matInput rows="6" [(ngModel)]="description"></textarea><br> -->
-    <textarea style="text-transform:capitalize;" matInput rows="4" name="description" [ngModel]="employee.description"
+    <textarea style="text-transform:capitalize;" matInput rows="4" name="description" [ngModel]="employee?.description"
                required placeholder="Description" #description="ngModel"></textarea>
     <mat-error *ngIf="description.invalid">Please enter Description</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('description').invalid">Please enter Description</mat-error> -->

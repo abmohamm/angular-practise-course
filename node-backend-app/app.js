@@ -56,6 +56,19 @@ app.get("/api/employees", (request,response,next) => {
                 employees: documents
             });
           });
+  });
+
+app.get("/api/employees/:employeeId", (request, response, next) => {
+  Employee.findById(request.params.employeeId)
+          .then(employee => {
+              if(employee){
+                  response.status(200).json(employee);
+              } else{
+                  response.status(404).json({
+                      message: "Records Not Found"
+                    });
+              }
+          });
 });
 
 app.put("/api/employees/:employeeId",(request, response, next) => {
