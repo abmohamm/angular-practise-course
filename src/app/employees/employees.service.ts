@@ -62,6 +62,19 @@ export class EmployeesService {
         });
     }
 
+    updateEmployee( employeeFirstName: string, employeeLastName: string, employeeEmailId: string,
+                    empId: string, employeeDescription: string) {
+      const employee: Employee = { empFirstName: employeeFirstName,
+                                   empLastName: employeeLastName,
+                                   empEmailId: employeeEmailId,
+                                   description:  employeeDescription,
+                                   employeeId: empId };
+      this.http.put(this.API_URL + empId, employee)
+               .subscribe((responseData) => {
+                 console.log('Response after updating : ' + responseData);
+               });
+    }
+
     deleteEmployee(employeeId: string) {
         this.http.delete(this.API_URL + employeeId)
         .subscribe(() => {

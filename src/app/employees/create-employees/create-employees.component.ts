@@ -17,9 +17,9 @@ export class CreateEmployeesComponent implements OnInit {
   employeeId = '';
   description = '';
   employeesService: EmployeesService;
+  employee: Employee;
   private mode = 'create';
   private empId: string;
-  private employee: Employee;
 
   constructor(employeesService: EmployeesService, public route: ActivatedRoute) {
     this.employeesService = employeesService;
@@ -44,16 +44,26 @@ export class CreateEmployeesComponent implements OnInit {
     //  alert('employee added successfully!!!');
   } */
 
-  onAddEmployee(employeeForm: NgForm) {
+  onSaveEmployee(employeeForm: NgForm) {
     if (employeeForm.invalid) {
       return;
     }
+    this.empFirstName = employeeForm.value.empFirstName;
+    this.empLastName = employeeForm.value.empLastName;
+    this.empEmailId = employeeForm.value.empEmailId;
+    this.employeeId = employeeForm.value.employeeId;
+    this.description = employeeForm.value.description;
     /* const employee = { empFirstName: employeeForm.value.empFirstName,
   empLastName: employeeForm.value.empLastName, empEmailId: employeeForm.value.empEmailId,
   employeeId: employeeForm.value.employeeId, description: employeeForm.value.description }; */
-    this.employeesService.addEmployee( employeeForm.value.empFirstName, employeeForm.value.empLastName,
-                                       employeeForm.value.empEmailId, employeeForm.value.employeeId,
-                                       employeeForm.value.description );
-    employeeForm.reset();
+    if (this.mode === 'create') {
+
+      this.employeesService.addEmployee( this.empFirstName, this.empLastName,
+                                         this.empEmailId, this.employeeId, this.description );
+    } else {
+      this.employeesService.updateEmployee(this.empFirstName, this.empLastName,
+                                           this.empEmailId, this.employeeId, this.description );
+    }
+    employeeForm.resetForm();
   }
 }

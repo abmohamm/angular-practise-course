@@ -35,7 +35,7 @@ app.post("/api/employees", (request,response,next) => {
 app.use((request, response, next) => {
     response.setHeader("Access-Control-Allow-Origin","*");
     response.setHeader("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
-    response.setHeader("Access-Control-Allow-Methods","GET,POST,PATCH,DELETE,OPTIONS,PUT");
+    response.setHeader("Access-Control-Allow-Methods","GET,POST,PUT,PATCH,DELETE,OPTIONS,PUT");
     next();
 });
 
@@ -58,9 +58,25 @@ app.get("/api/employees", (request,response,next) => {
           });
 });
 
-app.delete("/api/employees/:id",(request, response, next) => {
-    console.log("Id : "+request.params.id);
-    Employee.deleteOne({_id: request.params.id})
+app.put("/api/employees/:employeeId",(request, response, next) => {
+  const employee = new Employee({firstname: request.body.firstname,
+                                 lastname: request.body.lastname,
+                                 email: request.body.email,
+                                 jobid: request.body.jobid,
+                                 description: request.body.description});
+  Employee.updateOne({_id: request.params.employeeId}, employee)
+          .then(result => {
+              console.log("Employee Details : "+result);
+              response.status(200).json({
+                message: "Records Updated Successfully",
+                status: "OK"
+            });
+      });
+});
+
+app.delete("/api/employees/:employeeId",(request, response, next) => {
+    console.log("Employee Id : "+request.params.employeeId);
+    Employee.deleteOne({_id: request.params.employeeId})
             .then(result => {
                 consule.log('Result : ' + result);
                 response.status(200).json({
