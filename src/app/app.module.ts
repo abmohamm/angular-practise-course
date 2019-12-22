@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule,  MatCardModule,
          MatButtonModule, MatToolbarModule,
-         MatExpansionModule } from '@angular/material';
+         MatExpansionModule, MatProgressSpinnerModule} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +24,8 @@ import { EmployeesService } from './employees/employees.service';
   ],
   imports: [
     BrowserModule,  AppRoutingModule, FormsModule,  BrowserAnimationsModule,
-    MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,  MatExpansionModule, HttpClientModule
+    MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,
+    MatExpansionModule, MatProgressSpinnerModule, HttpClientModule
   ],
   // providers: [EmployeesService],
   providers: [],

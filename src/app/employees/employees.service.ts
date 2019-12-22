@@ -3,6 +3,7 @@ import { Employee } from './employee.model';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class EmployeesService {
 
   private employees: Employee[] = [];
   private employeesUpdated = new Subject<Employee[]>();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
 //  Below method returns copy of original employees array declared as private.
 //  Adding/Removing elements to/from below returning array will not effect original
@@ -59,6 +60,7 @@ export class EmployeesService {
                 //  employee.id = id;//mongodb creates a new id for every document
                 this.employees.push(employee);
                 this.employeesUpdated.next([...this.employees]);
+                this.router.navigate(['/']);
         });
     }
 
@@ -77,6 +79,7 @@ export class EmployeesService {
                  updatedEmployees[oldEmployeeIndex] = employee;
                  this.employees = updatedEmployees;
                  this.employeesUpdated.next([...this.employees]);
+                 this.router.navigate(['/']);
                });
     }
 

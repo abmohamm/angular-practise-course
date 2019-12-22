@@ -18,6 +18,7 @@ export class CreateEmployeesComponent implements OnInit {
   description = '';
   employeesService: EmployeesService;
   employee: Employee;
+  isLoading = false;
   private mode = 'create';
   private empId: string;
 
@@ -29,14 +30,16 @@ export class CreateEmployeesComponent implements OnInit {
         if (paramMap.has('employeeId')) {
             this.mode = 'edit';
             this.empId = paramMap.get('employeeId');
+            this.isLoading = true;
             this.employeesService.getEmployee(this.empId)
-                        .subscribe((employeeData) => {
-                            this.employee = { empFirstName: employeeData.empFirstName,
-                                              empLastName: employeeData.empLastName,
-                                              empEmailId: employeeData.empEmailId,
-                                              employeeId: employeeData.employeeId,
-                                              description: employeeData.description };
-                        });
+                .subscribe((employeeData) => {
+                    this.isLoading = false;
+                    this.employee = { empFirstName: employeeData.empFirstName,
+                                      empLastName: employeeData.empLastName,
+                                      empEmailId: employeeData.empEmailId,
+                                      employeeId: employeeData.employeeId,
+                                      description: employeeData.description };
+                });
         } else {
             this.mode = 'create';
             this.empId = null;
@@ -55,6 +58,7 @@ export class CreateEmployeesComponent implements OnInit {
     if (employeeForm.invalid) {
       return;
     }
+    this.isLoading = true;
     this.empFirstName = employeeForm.value.empFirstName;
     this.empLastName = employeeForm.value.empLastName;
     this.empEmailId = employeeForm.value.empEmailId;

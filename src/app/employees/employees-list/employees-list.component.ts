@@ -12,6 +12,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
 
   // @Input() newEmployees: Employee[] = [];
   newEmployees: Employee[] = [];
+  isLoading = false;
   employeesService: EmployeesService;
   private employeeSubscription: Subscription;
 
@@ -28,10 +29,12 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
       // ];
 
   ngOnInit() {
+    this.isLoading = true;
     this.employeesService.getEmployees();
     this.employeeSubscription = this.employeesService.getEmployeesUpdated()
         .subscribe((employees: Employee[]) => {
-              this.newEmployees = employees;
+          this.isLoading = false;
+          this.newEmployees = employees;
       });
   }
 

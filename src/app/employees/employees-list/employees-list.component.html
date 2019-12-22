@@ -1,6 +1,7 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
 <!-- const employee = { empFirstName: this.empFName, empLastName: this.empLName,
   empEmailId: this.empEmail, employeeId: this.empId, description:  this.description }; -->
-<mat-accordion multi="true" *ngIf="newEmployees.length > 0">
+<mat-accordion multi="true" *ngIf="newEmployees.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let employee of newEmployees">
     <mat-expansion-panel-header>
       <p><b>{{ employee.empFirstName }}'s Details</b></p>
@@ -16,5 +17,5 @@
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
-<p class="info-text mat-body-2" *ngIf="newEmployees.length <= 0">No Employees are added Yet !!!</p>
+<p class="info-text mat-body-2" *ngIf="newEmployees.length <= 0 && !isLoading">No Employees are added Yet !!!</p>
 <!-- <p class="mat-body-1"  *ngIf="employees.length <= 0">No Employees are added Yet !!!</p> -->

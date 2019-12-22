@@ -5,7 +5,8 @@
   empEmailId  = '';
   employeeId = '';
   description = ''; -->
-  <form (submit)="onSaveEmployee(employeeForm)" #employeeForm="ngForm">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSaveEmployee(employeeForm)" #employeeForm="ngForm" *ngIf="!isLoading">
     <!-- <p>Firstname</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empFirstName"><br> -->
