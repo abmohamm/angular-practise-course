@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { EmployeesService } from '../employees.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Employee } from '../employee.model';
@@ -19,6 +19,7 @@ export class CreateEmployeesComponent implements OnInit {
   employeesService: EmployeesService;
   employee: Employee;
   isLoading = false;
+  employeeForm: FormGroup;
   private mode = 'create';
   private empId: string;
 
@@ -26,6 +27,13 @@ export class CreateEmployeesComponent implements OnInit {
     this.employeesService = employeesService;
   }
   ngOnInit() {
+    this.employeeForm = new FormGroup({
+        empFirstName: new FormControl(null, { validators: [Validators.required, Validators.minLength(10)] }),
+        empLastName: new FormControl(null, { validators: [Validators.required] }),
+        empEmailId: new FormControl(null, { validators: [Validators.required] }),
+        employeeId: new FormControl(null, { validators: [Validators.required] }),
+        description: new FormControl(null, { validators: [Validators.required] }),
+    });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
         if (paramMap.has('employeeId')) {
             this.mode = 'edit';
@@ -38,7 +46,13 @@ export class CreateEmployeesComponent implements OnInit {
                                       empLastName: employeeData.empLastName,
                                       empEmailId: employeeData.empEmailId,
                                       employeeId: employeeData.employeeId,
-                                      description: employeeData.description };
+                                      description: employeeData.description
+                                    };
+                    this.employeeForm.setValue({ empFirstName: this.employee.empFirstName,
+                                              empLastName: this.employee.empLastName,
+                                              empEmailId: this.employee.empEmailId,
+                                              employeeId: this.employee.employeeId,
+                                              description: this.employee.description });
                 });
         } else {
             this.mode = 'create';
@@ -54,26 +68,32 @@ export class CreateEmployeesComponent implements OnInit {
     //  alert('employee added successfully!!!');
   } */
 
-  onSaveEmployee(employeeForm: NgForm) {
-    if (employeeForm.invalid) {
+  onSaveEmployee() {
+    if (this.employeeForm.invalid) {
       return;
     }
     this.isLoading = true;
-    this.empFirstName = employeeForm.value.empFirstName;
-    this.empLastName = employeeForm.value.empLastName;
-    this.empEmailId = employeeForm.value.empEmailId;
-    this.employeeId = employeeForm.value.employeeId;
-    this.description = employeeForm.value.description;
+    this.empFirstName = this.employeeForm.value.empFirstName;
+    this.empLastName = this.employeeForm.value.empLastName;
+    this.empEmailId = this.employeeForm.value.empEmailId;
+    this.employeeId = this.employeeForm.value.employeeId;
+    this.description = this.employeeForm.value.description;
     /* const employee = { empFirstName: employeeForm.value.empFirstName,
   empLastName: employeeForm.value.empLastName, empEmailId: employeeForm.value.empEmailId,
   employeeId: employeeForm.value.employeeId, description: employeeForm.value.description }; */
     if (this.mode === 'create') {
-      this.employeesService.addEmployee( this.empFirstName, this.empLastName,
-                                         this.empEmailId, this.employeeId, this.description );
+      this.employeesService.addEmployee( this.employeeForm.value.empFirstName,
+                                         this.employeeForm.value.empLastName,
+                                         this.employeeForm.value.empEmailId,
+                                         this.employeeForm.value.employeeId,
+                                         this.employeeForm.value.description );
     } else {
-      this.employeesService.updateEmployee(this.empFirstName, this.empLastName,
-                                           this.empEmailId, this.employeeId, this.description );
+      this.employeesService.updateEmployee(this.employeeForm.value.empFirstName,
+                                           this.employeeForm.value.empLastName,
+                                           this.employeeForm.value.empEmailId,
+                                           this.employeeForm.value.employeeId,
+                                           this.employeeForm.value.description );
     }
-    employeeForm.resetForm();
+    this.employeeForm.reset();
   }
 }

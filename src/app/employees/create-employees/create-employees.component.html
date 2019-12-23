@@ -6,45 +6,49 @@
   employeeId = '';
   description = ''; -->
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form (submit)="onSaveEmployee(employeeForm)" #employeeForm="ngForm" *ngIf="!isLoading">
+  <form [formGroup]="employeeForm" (submit)="onSaveEmployee()" *ngIf="!isLoading">
     <!-- <p>Firstname</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empFirstName"><br> -->
-    <input style="text-transform:capitalize;" matInput type="text" name="empFirstName" [ngModel]="employee?.empFirstName"
-            required placeholder="First Name" #empFirstName="ngModel">
-    <mat-error *ngIf="empFirstName.invalid">Please enter First Name</mat-error>
+    <input style="text-transform:capitalize;" matInput type="text" formControlName="empFirstName"
+            placeholder="First Name">
+    <mat-error *ngIf="employeeForm.get('empFirstName').invalid">Please enter First Name</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empFirstName').invalid">Please enter First Name</mat-error> -->
   </mat-form-field>
+  <div>
+    <button mat-stroked-button type="button" (click)="filePicker.click()">Upload</button>
+    <input type="file" #filePicker>
+  </div>
   <!-- <p>Lastname</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empLastName"><br> -->
-    <input style="text-transform:capitalize;" matInput type="text" name="empLastName" [ngModel]="employee?.empLastName"
-            required placeholder="Last Name" #empLastName="ngModel">
-    <mat-error *ngIf="empLastName.invalid">Please enter Last Name</mat-error>
+    <input style="text-transform:capitalize;" matInput type="text" formControlName="empLastName"
+            placeholder="Last Name">
+    <mat-error *ngIf="employeeForm.get('empLastName').invalid">Please enter Last Name</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empLastName').invalid">Please enter Last Name</mat-error> -->
   </mat-form-field>
   <!-- <p>Email:</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empEmailId"><br> -->
-    <input style="text-transform:capitalize;" matInput type="text" name="empEmailId" [ngModel]="employee?.empEmailId"
-            required placeholder="Email Id" #empEmailId="ngModel">
-    <mat-error *ngIf="empEmailId.invalid">Please enter Email Id</mat-error>
+    <input style="text-transform:capitalize;" matInput type="text" formControlName="empEmailId"
+            placeholder="Email Id">
+    <mat-error *ngIf="employeeForm.get('empEmailId').invalid">Please enter Email Id</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('empEmailId').invalid">Please enter Email Id</mat-error> -->
   </mat-form-field>
   <!-- <p>Id:</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="employeeId"><br> -->
-    <input style="text-transform:capitalize;" matInput type="text" name="employeeId" [ngModel]="employee?.employeeId"
-            required placeholder="Employee Id" #employeeId="ngModel">
-    <mat-error *ngIf="employeeId.invalid">Please enter Employee Id</mat-error>
+    <input style="text-transform:capitalize;" matInput type="text" formControlName="employeeId"
+            placeholder="Employee Id">
+    <mat-error *ngIf="employeeForm.get('employeeId').invalid">Please enter Employee Id</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('employeeId').invalid">Please enter Employee Id</mat-error> -->
   </mat-form-field>
   <!-- <p>Description:</p> -->
   <mat-form-field>
     <!-- <textarea matInput rows="6" [(ngModel)]="description"></textarea><br> -->
-    <textarea style="text-transform:capitalize;" matInput rows="4" name="description" [ngModel]="employee?.description"
-               required placeholder="Description" #description="ngModel"></textarea>
-    <mat-error *ngIf="description.invalid">Please enter Description</mat-error>
+    <textarea style="text-transform:capitalize;" matInput rows="4" formControlName="description"
+           placeholder="Description"></textarea>
+    <mat-error *ngIf="employeeForm.get('description').invalid">Please enter Description</mat-error>
     <!-- <mat-error *ngIf="employeeForm.getControl('description').invalid">Please enter Description</mat-error> -->
   </mat-form-field>
   <!-- <button mat-raised-button color="primary" (click)="onAddEmployee()">Save</button> -->
