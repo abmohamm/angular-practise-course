@@ -33,6 +33,7 @@ export class CreateEmployeesComponent implements OnInit {
         empEmailId: new FormControl(null, { validators: [Validators.required] }),
         employeeId: new FormControl(null, { validators: [Validators.required] }),
         description: new FormControl(null, { validators: [Validators.required] }),
+        uploadedFile: new FormControl(null, {validators: [Validators.required] })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
         if (paramMap.has('employeeId')) {
@@ -59,6 +60,14 @@ export class CreateEmployeesComponent implements OnInit {
             this.empId = null;
         }
     });
+  }
+
+  onFilePicked(event: Event) {
+      const file = (event.target as HTMLInputElement).files[0];
+      this.employeeForm.patchValue({uploadedFile: file});
+      this.employeeForm.get('uploadedFile').updateValueAndValidity();
+      console.log('File name : ' + file);
+      console.log(this.employeeForm);
   }
 
   /* onAddEmployee() {const employee = { empFirstName: this.empFirstName, empLastName: this.empLastName,

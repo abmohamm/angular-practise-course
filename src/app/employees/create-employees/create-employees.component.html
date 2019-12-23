@@ -17,7 +17,7 @@
   </mat-form-field>
   <div>
     <button mat-stroked-button type="button" (click)="filePicker.click()">Upload</button>
-    <input type="file" #filePicker>
+    <input type="file" #filePicker (change)="onFilePicked($event)">
   </div>
   <!-- <p>Lastname</p> -->
   <mat-form-field>
