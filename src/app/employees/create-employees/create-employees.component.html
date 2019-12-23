@@ -19,6 +19,9 @@
     <button mat-stroked-button type="button" (click)="filePicker.click()">Upload</button>
     <input type="file" #filePicker (change)="onFilePicked($event)">
   </div>
+  <div class="file-preview" *ngIf="filePreview !== '' && filePreview">
+      <img [src]="filePreview" [alt]="employeeForm.value.empFirstName">
+  </div>
   <!-- <p>Lastname</p> -->
   <mat-form-field>
     <!-- <input matInput type="text" [(ngModel)]="empLastName"><br> -->

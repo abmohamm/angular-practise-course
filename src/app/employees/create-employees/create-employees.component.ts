@@ -20,6 +20,7 @@ export class CreateEmployeesComponent implements OnInit {
   employee: Employee;
   isLoading = false;
   employeeForm: FormGroup;
+  filePreview: string;
   private mode = 'create';
   private empId: string;
 
@@ -66,8 +67,11 @@ export class CreateEmployeesComponent implements OnInit {
       const file = (event.target as HTMLInputElement).files[0];
       this.employeeForm.patchValue({uploadedFile: file});
       this.employeeForm.get('uploadedFile').updateValueAndValidity();
-      console.log('File name : ' + file);
-      console.log(this.employeeForm);
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+          this.filePreview = fileReader.result as string;
+      };
+      fileReader.readAsDataURL(file);
   }
 
   /* onAddEmployee() {const employee = { empFirstName: this.empFirstName, empLastName: this.empLastName,
