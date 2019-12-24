@@ -1,9 +1,33 @@
 const express = require("express");
-const router = express.Router();
+const multer =  require("multer");
 const Employee = require("../models/employee");
 
+const router = express.Router();
 
-router.post("", (request,response,next) => {
+const MIME_TYPE_MAP = {
+'image/png': 'png',
+'image/jpeg': 'jpg',
+'image/jpg': 'jpg'
+};
+
+const storage = multer.diskStorage({
+  destination: (request, file, callback) => {
+      const isValid = MIME_TYPE_MAP[file.mimetype];
+      let error = new Error("Invalid Mime Type");
+      if(isValid) {
+        error = null;
+      }
+      callback(error, "node-backend-app/images");
+  },
+  filename: (request, file, callback) => {
+      const name = file.originalname.toLowerCase().split(' ').join('-');
+      const extension = MIME_TYPE_MAP[file.mimetype];
+      callback(null, name + '-' + Date.now() + '.' + extension);
+  }
+});
+
+
+router.post("",  multer(storage).single("image"), (request,response,next) => {
   //  const employee = request.body;
   const employee = new Employee({firstname: request.body.firstname,
                                  lastname: request.body.lastname,
