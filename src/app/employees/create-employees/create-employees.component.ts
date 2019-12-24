@@ -100,7 +100,8 @@ export class CreateEmployeesComponent implements OnInit {
                                          this.employeeForm.value.empLastName,
                                          this.employeeForm.value.empEmailId,
                                          this.employeeForm.value.employeeId,
-                                         this.employeeForm.value.description );
+                                         this.employeeForm.value.description,
+                                         this.employeeForm.value.image );
     } else {
       this.employeesService.updateEmployee(this.employeeForm.value.empFirstName,
                                            this.employeeForm.value.empLastName,

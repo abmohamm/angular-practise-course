@@ -49,10 +49,17 @@ export class EmployeesService {
       return this.http.get<Employee>(this.API_URL + empId);
     }
 
-    addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string) {
+    addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string, image: File) {
         const employee: Employee = {  empFirstName: empFName, empLastName: empLName, empEmailId: empEmaId,
                                       employeeId: empId, description: descriptionn };
-        this.http.post<{message: string, status: string, id: string}>(this.API_URL, employee)
+        const employeeData = new FormData();
+        employeeData.append('empFirstName', empFName);
+        employeeData.append('empLastName', empLName);
+        employeeData.append('empEmailId', empEmaId);
+        employeeData.append('employeeId', empId);
+        employeeData.append('description', descriptionn);
+        employeeData.append('image', image);
+        this.http.post<{message: string, status: string, id: string}>(this.API_URL, employeeData)
             .subscribe((response) => {
                 console.log(response.message);
                 console.log(response.status);

@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
 });
 
 
-router.post("",  multer(storage).single("image"), (request,response,next) => {
+router.post("",  multer({storage: storage}).single("image"), (request,response,next) => {
   //  const employee = request.body;
   const employee = new Employee({firstname: request.body.firstname,
                                  lastname: request.body.lastname,
