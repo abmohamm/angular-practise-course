@@ -3,6 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { EmployeesService } from '../employees.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Employee } from '../employee.model';
+import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-create-employees',
@@ -34,7 +35,7 @@ export class CreateEmployeesComponent implements OnInit {
         empEmailId: new FormControl(null, { validators: [Validators.required] }),
         employeeId: new FormControl(null, { validators: [Validators.required] }),
         description: new FormControl(null, { validators: [Validators.required] }),
-        uploadedFile: new FormControl(null, {validators: [Validators.required] })
+        uploadedFile: new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType] })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
         if (paramMap.has('employeeId')) {

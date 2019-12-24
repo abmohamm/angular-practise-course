@@ -19,7 +19,7 @@
     <button mat-stroked-button type="button" (click)="filePicker.click()">Upload</button>
     <input type="file" #filePicker (change)="onFilePicked($event)">
   </div>
-  <div class="file-preview" *ngIf="filePreview !== '' && filePreview">
+  <div class="file-preview" *ngIf="filePreview !== '' && filePreview && employeeForm.get('file').valid" >
       <img [src]="filePreview" [alt]="employeeForm.value.empFirstName">
   </div>
   <!-- <p>Lastname</p> -->
