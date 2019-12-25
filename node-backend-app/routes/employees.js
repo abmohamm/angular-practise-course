@@ -29,18 +29,28 @@ const storage = multer.diskStorage({
 
 router.post("",  multer({storage: storage}).single("image"), (request,response,next) => {
   //  const employee = request.body;
+  const url = request.protocol + '://' + request.get("host");
   const employee = new Employee({firstname: request.body.firstname,
                                  lastname: request.body.lastname,
                                  email: request.body.email,
                                  jobid: request.body.jobid,
-                                 description: request.body.description});
+                                 description: request.body.description,
+                                 imagePath: url + "/images" + request.file.filename});
   console.log("Employee Details : " + employee);
   employee.save()   // This Command will insert a document into database.
           .then(createdEmployee => {
             response.status(201).json({
               message: "Records stored successfully",
               status: "OK",
-              id: createdEmployee._id
+              employee: {
+                  // ...createdEmployee,
+                  employeeId: createdEmployee.employeeId,
+                  empFirstName: createdEmployee.empFirstName,
+                  empLastName: createdEmployee.empLastName,
+                  empEmailId: createdEmployee.empEmailId,
+                  description: createdEmployee.description,
+                  imagePath: createdEmployee.imagePath
+              }
           });
     });
 });

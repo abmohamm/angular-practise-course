@@ -28,7 +28,8 @@ export class EmployeesService {
                                   empLastName: employee.empLastName,
                                   empEmailId: employee.empEmailId,
                                   employeeId: employee.employeeId,
-                                  description:  employee.description
+                                  description:  employee.description,
+                                  imagePath: employee.imagePath
                                };
                             });
                         }))
@@ -50,8 +51,8 @@ export class EmployeesService {
     }
 
     addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string, image: File) {
-        const employee: Employee = {  empFirstName: empFName, empLastName: empLName, empEmailId: empEmaId,
-                                      employeeId: empId, description: descriptionn };
+        // const employee: Employee = {  empFirstName: empFName, empLastName: empLName, empEmailId: empEmaId,
+        //                               employeeId: empId, description: descriptionn };
         const employeeData = new FormData();
         employeeData.append('empFirstName', empFName);
         employeeData.append('empLastName', empLName);
@@ -59,11 +60,17 @@ export class EmployeesService {
         employeeData.append('employeeId', empId);
         employeeData.append('description', descriptionn);
         employeeData.append('image', image);
-        this.http.post<{message: string, status: string, id: string}>(this.API_URL, employeeData)
-            .subscribe((response) => {
-                console.log(response.message);
-                console.log(response.status);
-                const id = response.id;
+        this.http.post<{message: string, status: string, employee: Employee}>(this.API_URL, employeeData)
+            .subscribe((responseData) => {
+                const employee: Employee = {
+                  empFirstName: responseData.employee.empFirstName,
+                  empLastName: responseData.employee.empLastName,
+                  empEmailId: responseData.employee.empEmailId,
+                  employeeId: responseData.employee.employeeId,
+                  description: responseData.employee.description,
+                  imagePath: responseData.employee.imagePath
+                };
+                //  const id = response.id;
                 //  employee.id = id;//mongodb creates a new id for every document
                 this.employees.push(employee);
                 this.employeesUpdated.next([...this.employees]);
@@ -77,7 +84,8 @@ export class EmployeesService {
                                    empLastName: employeeLastName,
                                    empEmailId: employeeEmailId,
                                    description:  employeeDescription,
-                                   employeeId: empId };
+                                   employeeId: empId,
+                                   imagePath: null};
       this.http.put(this.API_URL + empId, employee)
                .subscribe((responseData) => {
                  // console.log('Response after updating : ' + responseData);

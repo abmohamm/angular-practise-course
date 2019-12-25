@@ -49,7 +49,8 @@ export class CreateEmployeesComponent implements OnInit {
                                       empLastName: employeeData.empLastName,
                                       empEmailId: employeeData.empEmailId,
                                       employeeId: employeeData.employeeId,
-                                      description: employeeData.description
+                                      description: employeeData.description,
+                                      imagePath: null
                                     };
                     this.employeeForm.setValue({ empFirstName: this.employee.empFirstName,
                                               empLastName: this.employee.empLastName,
