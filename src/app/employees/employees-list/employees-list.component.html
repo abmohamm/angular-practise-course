@@ -21,6 +21,6 @@
   </mat-expansion-panel>
 </mat-accordion>
 <mat-paginator [length]="totalEmployees" [pageSize]="employeesPerPage" [pageSizeOptions]="pageSizeOptions"
-               (page)="onPageChanged($event)"></mat-paginator >
+               (page)="onPageChanged($event)" *ngIf="newEmployees.length > 0"></mat-paginator >
 <p class="info-text mat-body-2" *ngIf="newEmployees.length <= 0 && !isLoading">No Employees are added Yet !!!</p>
 <!-- <p class="mat-body-1"  *ngIf="employees.length <= 0">No Employees are added Yet !!!</p> -->

@@ -44,6 +44,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged(pageInformation: PageEvent) {
+    this.isLoading = true;
     this.currentPage = pageInformation.pageIndex + 1;
     this.employeesPerPage = pageInformation.pageSize;
     this.employeesService.getEmployees(this.employeesPerPage, this.currentPage);

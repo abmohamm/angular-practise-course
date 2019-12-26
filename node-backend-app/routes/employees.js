@@ -82,16 +82,21 @@ router.get("", (request,response,next) => {
     const pageSize = +request.query.pagesize;
     const currentPage = +request.query.page;
     const employeeQuery = Employee.find();
+    let fetchedEmployees;
     if(pageSize && currentPage) {
       employeeQuery.skip(pageSize * (currentPage - 1))
                    .limit(pageSize);
     }
     employeeQuery.then((documents) => {
       console.log("Data Retrieved : " + documents);
+      fetchedEmployees = documents;
+      return Employee.count();
+    }).then(count => {
       response.status(200).json({
         message: "Records retrieved successfully",
         status: "OK",
-        employees: documents
+        employees: fetchedEmployees,
+        maxEmployees: count
         });
     });
 });

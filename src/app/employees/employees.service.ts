@@ -13,7 +13,7 @@ export class EmployeesService {
   API_URL: 'http://localhost:3000/api/employees';
 
   private employees: Employee[] = [];
-  private employeesUpdated = new Subject<Employee[]>();
+  private employeesUpdated = new Subject<{employees: Employee[], employeeCount: number}>();
   constructor(private http: HttpClient, private router: Router) { }
 
 //  Below method returns copy of original employees array declared as private.
@@ -22,9 +22,9 @@ export class EmployeesService {
     getEmployees(employeesPerPage: number, currentPage: number) {
       const queryParams = `?pagesize=${employeesPerPage}&page=${currentPage}`;
 
-      this.http.get<{message: string, status: string, employees: any}>(this.API_URL + queryParams)
+      this.http.get<{message: string, status: string, employees: any, maxEmployees: number}>(this.API_URL + queryParams)
               .pipe(map((employeeData) => {
-                  return employeeData.employees.map(employee => {
+                  return { employees: employeeData.employees.map(employee => {
                       return {
                         empFirstName: employee.empFirstName,
                         empLastName: employee.empLastName,
@@ -33,11 +33,13 @@ export class EmployeesService {
                         description:  employee.description,
                         imagePath: employee.imagePath
                       };
-                  });
-              }))
-              .subscribe((employees) => {
-                  this.employees = employees;
-                  this.employeesUpdated.next([...this.employees]);
+                  }),
+                  maxEmployees: employeeData.maxEmployees};
+                  })
+              ).subscribe((transformedEmployeeData) => {
+                  this.employees = transformedEmployeeData.employees;
+                  this.employeesUpdated.next({  employees: [...this.employees],
+                                                employeeCount: transformedEmployeeData.maxEmployees });
         });
         // return [...this.employees];
         // return this.employees;
