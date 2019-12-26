@@ -19,24 +19,26 @@ export class EmployeesService {
 //  Below method returns copy of original employees array declared as private.
 //  Adding/Removing elements to/from below returning array will not effect original
 //  private array - suggested approach
-    getEmployees() {
-        return this.http.get<{message: string, status: string, employees: any}>(this.API_URL)
-                        .pipe(map((employeeData) => {
-                            return employeeData.employees.map(employee => {
-                               return {
-                                  empFirstName: employee.empFirstName,
-                                  empLastName: employee.empLastName,
-                                  empEmailId: employee.empEmailId,
-                                  employeeId: employee.employeeId,
-                                  description:  employee.description,
-                                  imagePath: employee.imagePath
-                               };
-                            });
-                        }))
-                        .subscribe((employees) => {
-                            this.employees = employees;
-                            this.employeesUpdated.next([...this.employees]);
-                      });
+    getEmployees(employeesPerPage: number, currentPage: number) {
+      const queryParams = `?pagesize=${employeesPerPage}&page=${currentPage}`;
+
+      this.http.get<{message: string, status: string, employees: any}>(this.API_URL + queryParams)
+              .pipe(map((employeeData) => {
+                  return employeeData.employees.map(employee => {
+                      return {
+                        empFirstName: employee.empFirstName,
+                        empLastName: employee.empLastName,
+                        empEmailId: employee.empEmailId,
+                        employeeId: employee.employeeId,
+                        description:  employee.description,
+                        imagePath: employee.imagePath
+                      };
+                  });
+              }))
+              .subscribe((employees) => {
+                  this.employees = employees;
+                  this.employeesUpdated.next([...this.employees]);
+        });
         // return [...this.employees];
         // return this.employees;
     }

@@ -16,6 +16,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   isLoading = false;
   totalEmployees = 10; // This represents how many records are available in bach-end and will be determined dynamically;
   employeesPerPage = 2; // This represents how many records should be present in each page
+  currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10]; // This represents/helps user to choose how many records should be present in each page
   employeesService: EmployeesService;
   private employeeSubscription: Subscription;
@@ -34,7 +35,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-    this.employeesService.getEmployees();
+    this.employeesService.getEmployees(this.employeesPerPage, this.currentPage);
     this.employeeSubscription = this.employeesService.getEmployeesUpdated()
         .subscribe((employees: Employee[]) => {
           this.isLoading = false;
@@ -43,7 +44,9 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged(pageInformation: PageEvent) {
-
+    this.currentPage = pageInformation.pageIndex + 1;
+    this.employeesPerPage = pageInformation.pageSize;
+    this.employeesService.getEmployees(this.employeesPerPage, this.currentPage);
   }
 
   onDelete(employeeId: string){
