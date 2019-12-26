@@ -6,6 +6,9 @@
     <mat-expansion-panel-header>
       <p><b>{{ employee.empFirstName }}'s Details</b></p>
     </mat-expansion-panel-header>
+    <div class="employee-image">
+        <img [src]="employee.imagePath" [alt]="employee.empFirstName">
+    </div>
     <p style="text-transform:capitalize;"><b>First Name : {{ employee.empFirstName }}</b></p>
     <p style="text-transform:capitalize;"><b>Last Name : {{ employee.empLastName }}</b></p>
     <p style="text-transform:capitalize;"><b>Email : {{ employee.empEmailId }}</b></p>

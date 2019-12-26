@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
 });
 
 
-router.post("",  multer({storage: storage}).single("image"), (request,response,next) => {
+router.post("", multer({storage: storage}).single("image"), (request,response,next) => {
   //  const employee = request.body;
   const url = request.protocol + '://' + request.get("host");
   const employee = new Employee({firstname: request.body.firstname,
@@ -55,12 +55,19 @@ router.post("",  multer({storage: storage}).single("image"), (request,response,n
     });
 });
 
-router.put("/:employeeId",(request, response, next) => {
+router.put("/:employeeId", multer({storage: storage}).single("image"), (request, response, next) => {
+  let imagePath = request.body.imagePath;
+  let url;
+  if(request.file) {
+    url = request.protocol + '://' + request.get("host");
+    imagePath = url + "/images" + request.file.filename;
+  }
   const employee = new Employee({firstname: request.body.firstname,
                                  lastname: request.body.lastname,
                                  email: request.body.email,
                                  jobid: request.body.jobid,
-                                 description: request.body.description});
+                                 description: request.body.description,
+                                 imagePath: imagePath});
   Employee.updateOne({_id: request.params.employeeId}, employee)
           .then(result => {
               console.log("Employee Details : "+result);

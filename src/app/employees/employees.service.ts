@@ -47,7 +47,9 @@ export class EmployeesService {
 
     getEmployee(empId: string) {
       // return {...this.employees.find(employee => employee.employeeId === empId)};
-      return this.http.get<Employee>(this.API_URL + empId);
+      // return this.http.get<Employee>(this.API_URL + empId);
+      return this.http.get<{empFirstName: string, empLastName: string, empEmailId: string,
+                            employeeId: string, description: string, imagePath: string}>(this.API_URL + empId);
     }
 
     addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string, image: File) {
@@ -79,18 +81,35 @@ export class EmployeesService {
     }
 
     updateEmployee( employeeFirstName: string, employeeLastName: string, employeeEmailId: string,
-                    empId: string, employeeDescription: string) {
-      const employee: Employee = { empFirstName: employeeFirstName,
-                                   empLastName: employeeLastName,
-                                   empEmailId: employeeEmailId,
-                                   description:  employeeDescription,
-                                   employeeId: empId,
-                                   imagePath: null};
-      this.http.put(this.API_URL + empId, employee)
+                    empId: string, employeeDescription: string, image: File | string) {
+        let employeeData: Employee | FormData;
+        if (typeof(image) === 'object') {
+          employeeData = new FormData();
+          employeeData.append('empFirstName', employeeFirstName);
+          employeeData.append('empLastName', employeeLastName);
+          employeeData.append('empEmailId', employeeEmailId);
+          employeeData.append('employeeId', empId);
+          employeeData.append('description', employeeDescription);
+          employeeData.append('image', image);
+        } else {
+          employeeData = {  empFirstName: employeeFirstName,
+                            empLastName: employeeLastName,
+                            empEmailId: employeeEmailId,
+                            description:  employeeDescription,
+                            employeeId: empId,
+                            imagePath: image };
+      }
+        this.http.put(this.API_URL + empId, employeeData)
                .subscribe((responseData) => {
                  // console.log('Response after updating : ' + responseData);
                  const updatedEmployees = [...this.employees];
-                 const oldEmployeeIndex = updatedEmployees.findIndex(p => p.employeeId === employee.employeeId);
+                 const oldEmployeeIndex = updatedEmployees.findIndex(p => p.employeeId === empId);
+                 const employee: Employee = { empFirstName: employeeFirstName,
+                                              empLastName: employeeLastName,
+                                              empEmailId: employeeEmailId,
+                                              description:  employeeDescription,
+                                              employeeId: empId,
+                                              imagePath: image };
                  updatedEmployees[oldEmployeeIndex] = employee;
                  this.employees = updatedEmployees;
                  this.employeesUpdated.next([...this.employees]);

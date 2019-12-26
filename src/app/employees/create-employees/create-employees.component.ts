@@ -50,13 +50,14 @@ export class CreateEmployeesComponent implements OnInit {
                                       empEmailId: employeeData.empEmailId,
                                       employeeId: employeeData.employeeId,
                                       description: employeeData.description,
-                                      imagePath: null
+                                      imagePath: employeeData.imagePath
                                     };
                     this.employeeForm.setValue({ empFirstName: this.employee.empFirstName,
                                               empLastName: this.employee.empLastName,
                                               empEmailId: this.employee.empEmailId,
                                               employeeId: this.employee.employeeId,
-                                              description: this.employee.description });
+                                              description: this.employee.description,
+                                              imagePath: this.employee.imagePath });
                 });
         } else {
             this.mode = 'create';
@@ -108,7 +109,8 @@ export class CreateEmployeesComponent implements OnInit {
                                            this.employeeForm.value.empLastName,
                                            this.employeeForm.value.empEmailId,
                                            this.employeeForm.value.employeeId,
-                                           this.employeeForm.value.description );
+                                           this.employeeForm.value.description,
+                                           this.employeeForm.value.image );
     }
     this.employeeForm.reset();
   }
