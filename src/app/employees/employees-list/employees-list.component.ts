@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Employee } from '../employee.model';
 import { EmployeesService } from '../employees.service';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-employees-list',
@@ -13,6 +14,9 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   // @Input() newEmployees: Employee[] = [];
   newEmployees: Employee[] = [];
   isLoading = false;
+  totalEmployees = 10; // This represents how many records are available in bach-end and will be determined dynamically;
+  employeesPerPage = 2; // This represents how many records should be present in each page
+  pageSizeOptions = [1, 2, 5, 10]; // This represents/helps user to choose how many records should be present in each page
   employeesService: EmployeesService;
   private employeeSubscription: Subscription;
 
@@ -36,6 +40,10 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.newEmployees = employees;
       });
+  }
+
+  onPageChanged(pageInformation: PageEvent) {
+
   }
 
   onDelete(employeeId: string){

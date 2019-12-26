@@ -109,7 +109,7 @@ export class EmployeesService {
                                               empEmailId: employeeEmailId,
                                               description:  employeeDescription,
                                               employeeId: empId,
-                                              imagePath: image };
+                                              imagePath: image as string };
                  updatedEmployees[oldEmployeeIndex] = employee;
                  this.employees = updatedEmployees;
                  this.employeesUpdated.next([...this.employees]);
