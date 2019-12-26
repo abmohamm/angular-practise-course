@@ -79,22 +79,21 @@ router.put("/:employeeId", multer({storage: storage}).single("image"), (request,
 });
 
 router.get("", (request,response,next) => {
-    // const employees = [
-    //         {firstname: 'Steven', lastname: 'King', email: 'sking@gmail.com', jobid: 'AD_PRES', description: 'Program Manager'},
-    //         {firstname: 'Neena', lastname: 'Kochhar', email: 'nkochhar@gmail.com', jobid: 'AD_VP', description: 'routerlication Developer'},
-    //         {firstname: 'Lex', lastname: 'De haan', email: 'ldehaan@gmail.com', jobid: 'AD_VP', description: 'Vice President'},
-    //         {firstname: 'Alexander', lastname: 'Hunold', email: 'ahunold@gmail.com', jobid: 'IT_PROG', description: 'QA Tester'},
-    //         {firstname: 'Bruce', lastname: 'Ernst', email: 'bernst@gmail.com', jobid: 'AD_PRES', description: 'Data Analyst'}
-    // ];
-    Employee.find()
-            .then((documents) => {
-                console.log("Data Retrieved : " + documents);
-                response.status(200).json({
-                  message: "Records retrieved successfully",
-                  status: "OK",
-                  employees: documents
-              });
-            });
+    const pageSize = +request.query.pagesize;
+    const currentPage = +request.query.page;
+    const employeeQuery = Employee.find();
+    if(pageSize && currentPage) {
+      employeeQuery.skip(pageSize * (currentPage - 1))
+                   .limit(pageSize);
+    }
+    employeeQuery.then((documents) => {
+      console.log("Data Retrieved : " + documents);
+      response.status(200).json({
+        message: "Records retrieved successfully",
+        status: "OK",
+        employees: documents
+        });
+    });
 });
 
 router.get("/:employeeId", (request, response, next) => {
