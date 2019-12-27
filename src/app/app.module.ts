@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule,  MatCardModule,
          MatButtonModule, MatToolbarModule,
          MatExpansionModule, MatProgressSpinnerModule,
@@ -14,6 +14,8 @@ import { HeaderComponent } from './headers/header/header.component';
 import { CreateEmployeesComponent } from './employees/create-employees/create-employees.component';
 import { EmployeesListComponent } from './employees/employees-list/employees-list.component';
 import { EmployeesService } from './employees/employees.service';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/signup/sign-up/sign-up.component';
 
 
 @NgModule({
@@ -21,10 +23,12 @@ import { EmployeesService } from './employees/employees.service';
     AppComponent,
     CreateEmployeesComponent,
     HeaderComponent,
-    EmployeesListComponent
+    EmployeesListComponent,
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
-    BrowserModule,  AppRoutingModule, ReactiveFormsModule,  BrowserAnimationsModule,
+    BrowserModule,  AppRoutingModule, ReactiveFormsModule, FormsModule, BrowserAnimationsModule,
     MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,
     MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule, HttpClientModule
   ],
