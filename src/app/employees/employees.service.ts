@@ -39,10 +39,9 @@ export class EmployeesService {
               ).subscribe((transformedEmployeeData) => {
                   this.employees = transformedEmployeeData.employees;
                   this.employeesUpdated.next({  employees: [...this.employees],
-                                                employeeCount: transformedEmployeeData.maxEmployees });
+                                                employeeCount: transformedEmployeeData.maxEmployees
+                                            });
         });
-        // return [...this.employees];
-        // return this.employees;
     }
 
     getEmployeesUpdated() {
@@ -68,18 +67,18 @@ export class EmployeesService {
         employeeData.append('image', image);
         this.http.post<{message: string, status: string, employee: Employee}>(this.API_URL, employeeData)
             .subscribe((responseData) => {
-                const employee: Employee = {
-                  empFirstName: responseData.employee.empFirstName,
-                  empLastName: responseData.employee.empLastName,
-                  empEmailId: responseData.employee.empEmailId,
-                  employeeId: responseData.employee.employeeId,
-                  description: responseData.employee.description,
-                  imagePath: responseData.employee.imagePath
-                };
-                //  const id = response.id;
-                //  employee.id = id;//mongodb creates a new id for every document
-                this.employees.push(employee);
-                this.employeesUpdated.next([...this.employees]);
+                // const employee: Employee = {
+                //   empFirstName: responseData.employee.empFirstName,
+                //   empLastName: responseData.employee.empLastName,
+                //   empEmailId: responseData.employee.empEmailId,
+                //   employeeId: responseData.employee.employeeId,
+                //   description: responseData.employee.description,
+                //   imagePath: responseData.employee.imagePath
+                // };
+                // //  const id = response.id;
+                // //  employee.id = id;//mongodb creates a new id for every document
+                // this.employees.push(employee);
+                // this.employeesUpdated.next([...this.employees]);
                 this.router.navigate(['/']);
         });
     }
@@ -108,25 +107,25 @@ export class EmployeesService {
                  // console.log('Response after updating : ' + responseData);
                  const updatedEmployees = [...this.employees];
                  const oldEmployeeIndex = updatedEmployees.findIndex(p => p.employeeId === empId);
-                 const employee: Employee = { empFirstName: employeeFirstName,
-                                              empLastName: employeeLastName,
-                                              empEmailId: employeeEmailId,
-                                              description:  employeeDescription,
-                                              employeeId: empId,
-                                              imagePath: image as string };
-                 updatedEmployees[oldEmployeeIndex] = employee;
-                 this.employees = updatedEmployees;
-                 this.employeesUpdated.next([...this.employees]);
+                //  const employee: Employee = { empFirstName: employeeFirstName,
+                //                               empLastName: employeeLastName,
+                //                               empEmailId: employeeEmailId,
+                //                               description:  employeeDescription,
+                //                               employeeId: empId,
+                //                               imagePath: image as string };
+                //  updatedEmployees[oldEmployeeIndex] = employee;
+                //  this.employees = updatedEmployees;
+                //  this.employeesUpdated.next([...this.employees]);
                  this.router.navigate(['/']);
                });
     }
 
     deleteEmployee(employeeId: string) {
-        this.http.delete(this.API_URL + employeeId)
-        .subscribe(() => {
-            const updatedEmployees = this.employees.filter(employee => employee.employeeId !== employeeId);
-            this.employees = updatedEmployees;
-            this.employeesUpdated.next([...this.employees]);
-        });
+        return this.http.delete(this.API_URL + employeeId);
+        // .subscribe(() => {
+        //     const updatedEmployees = this.employees.filter(employee => employee.employeeId !== employeeId);
+        //     this.employees = updatedEmployees;
+        //     this.employeesUpdated.next([...this.employees]);
+        // });
     }
 }
