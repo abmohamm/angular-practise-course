@@ -15,7 +15,7 @@ import { CreateEmployeesComponent } from './employees/create-employees/create-em
 import { EmployeesListComponent } from './employees/employees-list/employees-list.component';
 import { EmployeesService } from './employees/employees.service';
 import { LoginComponent } from './auth/login/login.component';
-import { SignUpComponent } from './auth/signup/sign-up/sign-up.component';
+import { SignUpComponent } from './auth/signup/sign-up.component';
 
 
 @NgModule({
