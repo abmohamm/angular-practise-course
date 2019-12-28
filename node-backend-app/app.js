@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const employeeRoutes = require("./routes/employees");
+const userRoutes = require("./routes/users");
 
 const app = express();
 mongoose.connect("mongodb+srv://admin:5ZXMq7Mphz2A4oHY@testcluster-hqygl.mongodb.net/test?retryWrites=true&w=majority")
@@ -26,6 +27,7 @@ app.use((request, response, next) => {
     next();
 });
 
-app.use("/api/employees",employeeRoutes);
+app.use("/api/employees", employeeRoutes);
+app.use("/api/user",  userRoutes);
 
 module.exports = app;

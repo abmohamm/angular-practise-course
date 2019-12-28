@@ -10,7 +10,7 @@ import { MatInputModule,  MatCardModule,
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './headers/header/header.component';
+import { HeaderComponent } from './headers/header.component';
 import { CreateEmployeesComponent } from './employees/create-employees/create-employees.component';
 import { EmployeesListComponent } from './employees/employees-list/employees-list.component';
 import { EmployeesService } from './employees/employees.service';
@@ -33,7 +33,7 @@ import { SignUpComponent } from './auth/signup/sign-up.component';
     MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule, HttpClientModule
   ],
   // providers: [EmployeesService],
-  providers: [],
+  providers: [EmployeesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
