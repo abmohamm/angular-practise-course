@@ -8,7 +8,7 @@ import { AuthData } from './auth-data.model';
 export class AuthService {
 
       SIGN_UP_API_URL: 'http://localhost:3000/api/user/signup';
-      // LOGIN_API_URL: 'http://localhost:3000/api/user/signup';
+      LOGIN_API_URL: 'http://localhost:3000/api/user/login';
 
       constructor(private http: HttpClient) { }
 
@@ -18,5 +18,14 @@ export class AuthService {
                    .subscribe((response) => {
                      console.log(response);
              });
+      }
+
+      login(userEmail: string, userPassword: string) {
+        const authData: AuthData = { email: userEmail, password: userPassword };
+        this.http.post(this.LOGIN_API_URL, authData)
+                 .subscribe(response => {
+                    console.log(response);
+                 });
+
       }
 }
