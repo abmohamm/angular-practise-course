@@ -1,6 +1,8 @@
 const express = require("express");
 const multer =  require("multer");
+
 const Employee = require("../models/employee");
+const checkAuth = require("../middle-ware/check-auth");
 
 const router = express.Router();
 
@@ -27,7 +29,10 @@ const storage = multer.diskStorage({
 });
 
 
-router.post("", multer({storage: storage}).single("image"), (request,response,next) => {
+router.post("",
+            checkAuth,
+            multer({storage: storage}).single("image"),
+            (request,response,next) => {
   //  const employee = request.body;
   const url = request.protocol + '://' + request.get("host");
   const employee = new Employee({firstname: request.body.firstname,
@@ -55,7 +60,10 @@ router.post("", multer({storage: storage}).single("image"), (request,response,ne
     });
 });
 
-router.put("/:employeeId", multer({storage: storage}).single("image"), (request, response, next) => {
+router.put("/:employeeId",
+           checkAuth,
+           multer({storage: storage}).single("image"),
+           (request, response, next) => {
   let imagePath = request.body.imagePath;
   let url;
   if(request.file) {
@@ -114,7 +122,9 @@ router.get("/:employeeId", (request, response, next) => {
         });
 });
 
-router.delete("/:employeeId",(request, response, next) => {
+router.delete("/:employeeId",
+              checkAuth,
+             (request, response, next) => {
     console.log("Employee Id : "+request.params.employeeId);
     Employee.deleteOne({_id: request.params.employeeId})
             .then(result => {

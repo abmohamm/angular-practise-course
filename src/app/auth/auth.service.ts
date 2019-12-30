@@ -7,10 +7,16 @@ import { AuthData } from './auth-data.model';
 })
 export class AuthService {
 
+      private token: string;
+
       SIGN_UP_API_URL: 'http://localhost:3000/api/user/signup';
       LOGIN_API_URL: 'http://localhost:3000/api/user/login';
 
       constructor(private http: HttpClient) { }
+
+      getToken() {
+        return this.token;
+      }
 
       createUser(userEmail: string, userPassword: string) {
           const authData: AuthData = { email: userEmail, password: userPassword };
@@ -22,9 +28,11 @@ export class AuthService {
 
       login(userEmail: string, userPassword: string) {
         const authData: AuthData = { email: userEmail, password: userPassword };
-        this.http.post(this.LOGIN_API_URL, authData)
+        this.http.post<{token: string}>(this.LOGIN_API_URL, authData)
                  .subscribe(response => {
-                    console.log(response);
+                     // console.log(response);
+                     const token = response.token;
+                     this.token = token;
                  });
 
       }
