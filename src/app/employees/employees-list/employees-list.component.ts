@@ -3,6 +3,7 @@ import { Employee } from '../employee.model';
 import { EmployeesService } from '../employees.service';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -18,20 +19,14 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   employeesPerPage = 2; // This represents how many records should be present in each page
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10]; // This represents/helps user to choose how many records should be present in each page
+  isUserAuthenticated = false;
   employeesService: EmployeesService;
   private employeeSubscription: Subscription;
+  private authStatusSubscription: Subscription;
 
-  constructor(employeesService: EmployeesService) {
+  constructor(employeesService: EmployeesService, private authService: AuthService) {
     this.employeesService = employeesService;
   }
-
-      // employees = [
-      //   {firstname: 'Steven',  lastname: 'King', email: 'sking@gmail.com', jobid: 'AD_PRES', description: 'Program Manager'},
-      //   {firstname: 'Neena',  lastname: 'Kochhar', email: 'nkochhar@gmail.com', jobid: 'AD_VP', description:  'Application Developer'},
-      //   {firstname: 'Lex',  lastname: 'De haan', email: 'ldehaan@gmail.com', jobid: 'AD_VP', description: 'Vice President'},
-      //   {firstname: 'Alexander',  lastname: 'Hunold', email: 'ahunold@gmail.com', jobid: 'IT_PROG', description: 'QA Tester'},
-      //   {firstname: 'Bruce',  lastname: 'Ernst', email: 'bernst@gmail.com', jobid: 'AD_PRES', description: 'Data Analyst'}
-      // ];
 
   ngOnInit() {
     this.isLoading = true;
@@ -41,7 +36,13 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.totalEmployees = employeeData.employeeCount;
           this.newEmployees = employeeData.employees;
-      });
+    });
+    this.isUserAuthenticated = this.authService.getIsAuthenticated();
+    this.authStatusSubscription = this.authService.getAuthStatusListener()
+                                                 .subscribe(isAuthenticated => {
+                                                    this.isUserAuthenticated = isAuthenticated;
+
+    });
   }
 
   onPageChanged(pageInformation: PageEvent) {
@@ -61,6 +62,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
       this.employeeSubscription.unsubscribe();
+      this.authStatusSubscription.unsubscribe();
   }
 
 }

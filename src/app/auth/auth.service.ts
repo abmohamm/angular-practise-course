@@ -10,6 +10,7 @@ export class AuthService {
 
       private token: string;
       private authStatusListener = new Subject<boolean>();
+      private isAuthenticated = false;
 
       SIGN_UP_API_URL: 'http://localhost:3000/api/user/signup';
       LOGIN_API_URL: 'http://localhost:3000/api/user/login';
@@ -18,6 +19,10 @@ export class AuthService {
 
       getToken() {
         return this.token;
+      }
+
+      getIsAuthenticated() {
+        return this.isAuthenticated;
       }
 
       getAuthStatusListener() {
@@ -39,8 +44,11 @@ export class AuthService {
                      // console.log(response);
                      const token = response.token;
                      this.token = token;
-                     this.authStatusListener.next(true);
-                 });
+                     if(token){
+                      this.authStatusListener.next(true);
+                      this.isAuthenticated = true;
+                     }
+             });
 
       }
 }
