@@ -49,7 +49,8 @@ router.post("/login", (request, response, next) => {
                                   'secret_this_should_be_longer',
                                  { expiresIn: '1h' });
           response.status(200).json({
-               token: token
+               token: token,
+               expiresIn: 3600
           });
       })
       .catch(error => {
