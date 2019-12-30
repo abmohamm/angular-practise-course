@@ -8,47 +8,52 @@ import { Subject } from 'rxjs';
 })
 export class AuthService {
 
-      private token: string;
-      private authStatusListener = new Subject<boolean>();
-      private isAuthenticated = false;
+  private token: string;
+  private authStatusListener = new Subject<boolean>();
+  private isAuthenticated = false;
 
-      SIGN_UP_API_URL: 'http://localhost:3000/api/user/signup';
-      LOGIN_API_URL: 'http://localhost:3000/api/user/login';
+  SIGN_UP_API_URL: 'http://localhost:3000/api/user/signup';
+  LOGIN_API_URL: 'http://localhost:3000/api/user/login';
 
-      constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-      getToken() {
-        return this.token;
-      }
+  getToken() {
+    return this.token;
+  }
 
-      getIsAuthenticated() {
-        return this.isAuthenticated;
-      }
+  getIsAuthenticated() {
+    return this.isAuthenticated;
+  }
 
-      getAuthStatusListener() {
-        return this.authStatusListener.asObservable();
-      }
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
 
-      createUser(userEmail: string, userPassword: string) {
-          const authData: AuthData = { email: userEmail, password: userPassword };
-          this.http.post(this.SIGN_UP_API_URL, authData)
-                   .subscribe((response) => {
-                     console.log(response);
-             });
-      }
+  createUser(userEmail: string, userPassword: string) {
+    const authData: AuthData = { email: userEmail, password: userPassword };
+    this.http.post(this.SIGN_UP_API_URL, authData)
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
 
-      login(userEmail: string, userPassword: string) {
-        const authData: AuthData = { email: userEmail, password: userPassword };
-        this.http.post<{token: string}>(this.LOGIN_API_URL, authData)
-                 .subscribe(response => {
-                     // console.log(response);
-                     const token = response.token;
-                     this.token = token;
-                     if(token){
-                      this.authStatusListener.next(true);
-                      this.isAuthenticated = true;
-                     }
-             });
+  login(userEmail: string, userPassword: string) {
+    const authData: AuthData = { email: userEmail, password: userPassword };
+    this.http.post<{ token: string }>(this.LOGIN_API_URL, authData)
+      .subscribe(response => {
+        // console.log(response);
+        const token = response.token;
+        this.token = token;
+        if (token) {
+          this.authStatusListener.next(true);
+          this.isAuthenticated = true;
+        }
+      });
+  }
 
-      }
+  logout() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+  }
 }
