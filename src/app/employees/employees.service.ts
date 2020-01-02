@@ -31,7 +31,8 @@ export class EmployeesService {
                         empEmailId: employee.empEmailId,
                         employeeId: employee.employeeId,
                         description:  employee.description,
-                        imagePath: employee.imagePath
+                        imagePath: employee.imagePath,
+                        creator: employee.creator
                       };
                   }),
                   maxEmployees: employeeData.maxEmployees};

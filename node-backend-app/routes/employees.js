@@ -40,7 +40,8 @@ router.post("",
                                  email: request.body.email,
                                  jobid: request.body.jobid,
                                  description: request.body.description,
-                                 imagePath: url + "/images" + request.file.filename});
+                                 imagePath: url + "/images" + request.file.filename,
+                                 creator: request.userData.userId});
   console.log("Employee Details : " + employee);
   employee.save()   // This Command will insert a document into database.
           .then(createdEmployee => {
