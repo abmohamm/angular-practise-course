@@ -61,29 +61,34 @@ router.post("",
     });
 });
 
-router.put("/:employeeId",
-           checkAuth,
-           multer({storage: storage}).single("image"),
-           (request, response, next) => {
-  let imagePath = request.body.imagePath;
-  let url;
-  if(request.file) {
-    url = request.protocol + '://' + request.get("host");
-    imagePath = url + "/images" + request.file.filename;
-  }
-  const employee = new Employee({firstname: request.body.firstname,
-                                 lastname: request.body.lastname,
-                                 email: request.body.email,
-                                 jobid: request.body.jobid,
-                                 description: request.body.description,
-                                 imagePath: imagePath});
-  Employee.updateOne({_id: request.params.employeeId}, employee)
+router.put("/:employeeId", checkAuth, multer({storage: storage}).single("image"), (request, response, next) => {
+                      let imagePath = request.body.imagePath;
+                      let url;
+                      if(request.file) {
+                        url = request.protocol + '://' + request.get("host");
+                        imagePath = url + "/images" + request.file.filename;
+                      }
+                      const employee = new Employee({firstname: request.body.firstname,
+                                                    lastname: request.body.lastname,
+                                                    email: request.body.email,
+                                                    jobid: request.body.jobid,
+                                                    description: request.body.description,
+                                                    imagePath: imagePath});
+  Employee.updateOne({_id: request.params.employeeId, creator: request.userData.userId}, employee)
           .then(result => {
               console.log("Employee Details : "+result);
-              response.status(200).json({
-                message: "Records Updated Successfully",
-                status: "OK"
-            });
+              if (result.nModified > 0) {
+                  response.status(200).json({
+                    message: "Records Updated Successfully",
+                    status: "OK"
+                });
+              }
+              else{
+                  response.status(401).json({
+                    message: "Not Authorized to Edit/update",
+                    status: "BAD AUTHENTICATION REQUEST"
+                });
+              }
       });
 });
 
@@ -127,13 +132,20 @@ router.delete("/:employeeId",
               checkAuth,
              (request, response, next) => {
     console.log("Employee Id : "+request.params.employeeId);
-    Employee.deleteOne({_id: request.params.employeeId})
+    Employee.deleteOne({  _id: request.params.employeeId,creator: request.userData.userId })
             .then(result => {
-                consule.log('Result : ' + result);
+              if (result.n > 0) {
                 response.status(200).json({
-                  message: "Records deleted successfully",
+                  message: "Record Deleted Successfully",
                   status: "OK"
-          });
+              });
+            }
+            else{
+                response.status(401).json({
+                  message: "Not Authorized to Delete",
+                  status: "BAD AUTHENTICATION REQUEST"
+              });
+          }
     });
 });
 
