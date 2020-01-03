@@ -53,7 +53,7 @@ export class EmployeesService {
       // return {...this.employees.find(employee => employee.employeeId === empId)};
       // return this.http.get<Employee>(this.API_URL + empId);
       return this.http.get<{empFirstName: string, empLastName: string, empEmailId: string,
-                            employeeId: string, description: string, imagePath: string}>(this.API_URL + empId);
+                            employeeId: string, description: string, imagePath: string, creator: string}>(this.API_URL + empId);
     }
 
     addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string, image: File) {
@@ -101,11 +101,11 @@ export class EmployeesService {
                             empEmailId: employeeEmailId,
                             description:  employeeDescription,
                             employeeId: empId,
-                            imagePath: image };
+                            imagePath: image,
+                            creator: null };
       }
         this.http.put(this.API_URL + empId, employeeData)
                .subscribe((responseData) => {
-                 // console.log('Response after updating : ' + responseData);
                  const updatedEmployees = [...this.employees];
                  const oldEmployeeIndex = updatedEmployees.findIndex(p => p.employeeId === empId);
                 //  const employee: Employee = { empFirstName: employeeFirstName,

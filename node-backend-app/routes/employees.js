@@ -73,7 +73,8 @@ router.put("/:employeeId", checkAuth, multer({storage: storage}).single("image")
                                                     email: request.body.email,
                                                     jobid: request.body.jobid,
                                                     description: request.body.description,
-                                                    imagePath: imagePath});
+                                                    imagePath: imagePath,
+                                                    creator: request.userData.userId});
   Employee.updateOne({_id: request.params.employeeId, creator: request.userData.userId}, employee)
           .then(result => {
               console.log("Employee Details : "+result);

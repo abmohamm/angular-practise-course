@@ -5,4 +5,5 @@ export interface Employee {
     employeeId: string;
     description: string;
     imagePath: string;
+    creator: string;
 }

@@ -20,6 +20,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10]; // This represents/helps user to choose how many records should be present in each page
   isUserAuthenticated = false;
+  userId: string;
   employeesService: EmployeesService;
   private employeeSubscription: Subscription;
   private authStatusSubscription: Subscription;
@@ -31,6 +32,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.employeesService.getEmployees(this.employeesPerPage, this.currentPage);
+    this.userId = this.authService.getUserId();
     this.employeeSubscription = this.employeesService.getEmployeesUpdated()
         .subscribe((employeeData: {employees: Employee[], employeeCount: number}) => {
           this.isLoading = false;
@@ -41,6 +43,7 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
     this.authStatusSubscription = this.authService.getAuthStatusListener()
                                                  .subscribe(isAuthenticated => {
                                                     this.isUserAuthenticated = isAuthenticated;
+                                                    this.userId = this.authService.getUserId();
 
     });
   }

@@ -14,7 +14,7 @@
     <p style="text-transform:capitalize;"><b>Email : {{ employee.empEmailId }}</b></p>
     <p style="text-transform:capitalize;"><b>Job Id : {{ employee.employeeId }}</b></p>
     <p style="text-transform:capitalize;"><b>Description : {{ employee.description}}</b></p>
-    <mat-action-row *ngIf="isUserAuthenticated">
+    <mat-action-row *ngIf="isUserAuthenticated && userId === employee.creator">
       <button mat-button color="primary" [routerLink]="['/edit',employee.employeeId]">Edit</button>
       <button mat-button color="warn" (click)="onDelete(employee.employeeId)">Delete</button>
     </mat-action-row>
