@@ -42,6 +42,10 @@ export class AuthService {
     this.http.post(this.SIGN_UP_API_URL, authData)
       .subscribe((response) => {
         console.log(response);
+        this.router.navigate(['/']);
+      }, error => {
+        console.log(error);
+        this.authStatusListener.next(false);
       });
   }
 
@@ -60,11 +64,13 @@ export class AuthService {
           this.userId = response.userId;
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthenticationData(token, expirationDate,this.userId);
+          this.saveAuthenticationData(token, expirationDate, this.userId);
           this.isAuthenticated = true;
-
           this.router.navigate(['/']);
         }
+      }, error => {
+        console.log(error);
+        this.authStatusListener.next(false);
       });
   }
 
