@@ -6,7 +6,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule,  MatCardModule,
          MatButtonModule, MatToolbarModule,
          MatExpansionModule, MatProgressSpinnerModule,
-         MatPaginatorModule} from '@angular/material';
+         MatPaginatorModule,
+         MatDialogModule} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/signup/sign-up.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from './error/error.component';
 
 
 @NgModule({
@@ -27,12 +29,13 @@ import { ErrorInterceptor } from './error-interceptor';
     HeaderComponent,
     EmployeesListComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,  AppRoutingModule, ReactiveFormsModule, FormsModule, BrowserAnimationsModule,
     MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,
-    MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule, HttpClientModule
+    MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule, MatDialogModule, HttpClientModule
   ],
   // providers: [EmployeesService],
   // providers: [EmployeesService],
@@ -40,6 +43,7 @@ import { ErrorInterceptor } from './error-interceptor';
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }
