@@ -17,6 +17,7 @@ import { EmployeesService } from './employees/employees.service';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/signup/sign-up.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { ErrorInterceptor } from './error-interceptor';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
   // providers: [EmployeesService],
   // providers: [EmployeesService],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
