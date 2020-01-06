@@ -34,18 +34,18 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
     this.employeesService.getEmployees(this.employeesPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
     this.employeeSubscription = this.employeesService.getEmployeesUpdated()
-        .subscribe((employeeData: {employees: Employee[], employeeCount: number}) => {
-          this.isLoading = false;
-          this.totalEmployees = employeeData.employeeCount;
-          this.newEmployees = employeeData.employees;
-    });
+      .subscribe((employeeData: { employees: Employee[], employeeCount: number }) => {
+        this.isLoading = false;
+        this.totalEmployees = employeeData.employeeCount;
+        this.newEmployees = employeeData.employees;
+      });
     this.isUserAuthenticated = this.authService.getIsAuthenticated();
     this.authStatusSubscription = this.authService.getAuthStatusListener()
-                                                 .subscribe(isAuthenticated => {
-                                                    this.isUserAuthenticated = isAuthenticated;
-                                                    this.userId = this.authService.getUserId();
+      .subscribe(isAuthenticated => {
+        this.isUserAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
 
-    });
+      });
   }
 
   onPageChanged(pageInformation: PageEvent) {
@@ -58,16 +58,16 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
   onDelete(employeeId: string) {
     this.isLoading = true;
     this.employeesService.deleteEmployee(employeeId)
-                    .subscribe(() => {
-                     this.employeesService.getEmployees(this.employeesPerPage, this.currentPage);
-                  }, () => {
-                     this.isLoading = false;
-                  });
+      .subscribe(() => {
+        this.employeesService.getEmployees(this.employeesPerPage, this.currentPage);
+      }, () => {
+        this.isLoading = false;
+      });
   }
 
   ngOnDestroy() {
-      this.employeeSubscription.unsubscribe();
-      this.authStatusSubscription.unsubscribe();
+    this.employeeSubscription.unsubscribe();
+    this.authStatusSubscription.unsubscribe();
   }
 
 }

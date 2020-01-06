@@ -9,16 +9,15 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
-    employeesAdded: Employee[] = [];
+  employeesAdded: Employee[] = [];
 
-    ngOnInit() {
-        this.authService.autoAuthenticateUser();
-    }
+  ngOnInit() {
+    this.authService.autoAuthenticateUser();
+  }
 
-
-    onEmployeeAdded(employee: Employee)  {
-        this.employeesAdded.push(employee);
-    }
+  onEmployeeAdded(employee: Employee) {
+    this.employeesAdded.push(employee);
+  }
 }

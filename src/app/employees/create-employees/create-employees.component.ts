@@ -11,10 +11,10 @@ import { mimeType } from './mime-type.validator';
   styleUrls: ['./create-employees.component.css']
 })
 export class CreateEmployeesComponent implements OnInit {
- // @Output() employeeCreated = new EventEmitter<Employee>();
-  empFirstName  = '';
-  empLastName  = '';
-  empEmailId  = '';
+  // @Output() employeeCreated = new EventEmitter<Employee>();
+  empFirstName = '';
+  empLastName = '';
+  empEmailId = '';
   employeeId = '';
   description = '';
   employeesService: EmployeesService;
@@ -30,52 +30,55 @@ export class CreateEmployeesComponent implements OnInit {
   }
   ngOnInit() {
     this.employeeForm = new FormGroup({
-        empFirstName: new FormControl(null, { validators: [Validators.required, Validators.minLength(10)] }),
-        empLastName: new FormControl(null, { validators: [Validators.required] }),
-        empEmailId: new FormControl(null, { validators: [Validators.required] }),
-        employeeId: new FormControl(null, { validators: [Validators.required] }),
-        description: new FormControl(null, { validators: [Validators.required] }),
-        uploadedFile: new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType] })
+      empFirstName: new FormControl(null, { validators: [Validators.required, Validators.minLength(10)] }),
+      empLastName: new FormControl(null, { validators: [Validators.required] }),
+      empEmailId: new FormControl(null, { validators: [Validators.required] }),
+      employeeId: new FormControl(null, { validators: [Validators.required] }),
+      description: new FormControl(null, { validators: [Validators.required] }),
+      uploadedFile: new FormControl(null, { validators: [Validators.required], asyncValidators: [mimeType] })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-        if (paramMap.has('employeeId')) {
-            this.mode = 'edit';
-            this.empId = paramMap.get('employeeId');
-            this.isLoading = true;
-            this.employeesService.getEmployee(this.empId)
-                .subscribe((employeeData) => {
-                    this.isLoading = false;
-                    this.employee = { empFirstName: employeeData.empFirstName,
-                                      empLastName: employeeData.empLastName,
-                                      empEmailId: employeeData.empEmailId,
-                                      employeeId: employeeData.employeeId,
-                                      description: employeeData.description,
-                                      imagePath: employeeData.imagePath,
-                                      creator: employeeData.creator
-                                    };
-                    this.employeeForm.setValue({ empFirstName: this.employee.empFirstName,
-                                              empLastName: this.employee.empLastName,
-                                              empEmailId: this.employee.empEmailId,
-                                              employeeId: this.employee.employeeId,
-                                              description: this.employee.description,
-                                              imagePath: this.employee.imagePath });
-                });
-        } else {
-            this.mode = 'create';
-            this.empId = null;
-        }
+      if (paramMap.has('employeeId')) {
+        this.mode = 'edit';
+        this.empId = paramMap.get('employeeId');
+        this.isLoading = true;
+        this.employeesService.getEmployee(this.empId)
+          .subscribe((employeeData) => {
+            this.isLoading = false;
+            this.employee = {
+              empFirstName: employeeData.empFirstName,
+              empLastName: employeeData.empLastName,
+              empEmailId: employeeData.empEmailId,
+              employeeId: employeeData.employeeId,
+              description: employeeData.description,
+              imagePath: employeeData.imagePath,
+              creator: employeeData.creator
+            };
+            this.employeeForm.setValue({
+              empFirstName: this.employee.empFirstName,
+              empLastName: this.employee.empLastName,
+              empEmailId: this.employee.empEmailId,
+              employeeId: this.employee.employeeId,
+              description: this.employee.description,
+              imagePath: this.employee.imagePath
+            });
+          });
+      } else {
+        this.mode = 'create';
+        this.empId = null;
+      }
     });
   }
 
   onFilePicked(event: Event) {
-      const file = (event.target as HTMLInputElement).files[0];
-      this.employeeForm.patchValue({uploadedFile: file});
-      this.employeeForm.get('uploadedFile').updateValueAndValidity();
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-          this.filePreview = fileReader.result as string;
-      };
-      fileReader.readAsDataURL(file);
+    const file = (event.target as HTMLInputElement).files[0];
+    this.employeeForm.patchValue({ uploadedFile: file });
+    this.employeeForm.get('uploadedFile').updateValueAndValidity();
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      this.filePreview = fileReader.result as string;
+    };
+    fileReader.readAsDataURL(file);
   }
 
   /* onAddEmployee() {const employee = { empFirstName: this.empFirstName, empLastName: this.empLastName,
@@ -99,19 +102,19 @@ export class CreateEmployeesComponent implements OnInit {
   empLastName: employeeForm.value.empLastName, empEmailId: employeeForm.value.empEmailId,
   employeeId: employeeForm.value.employeeId, description: employeeForm.value.description }; */
     if (this.mode === 'create') {
-      this.employeesService.addEmployee( this.employeeForm.value.empFirstName,
-                                         this.employeeForm.value.empLastName,
-                                         this.employeeForm.value.empEmailId,
-                                         this.employeeForm.value.employeeId,
-                                         this.employeeForm.value.description,
-                                         this.employeeForm.value.image );
+      this.employeesService.addEmployee(this.employeeForm.value.empFirstName,
+        this.employeeForm.value.empLastName,
+        this.employeeForm.value.empEmailId,
+        this.employeeForm.value.employeeId,
+        this.employeeForm.value.description,
+        this.employeeForm.value.image);
     } else {
       this.employeesService.updateEmployee(this.employeeForm.value.empFirstName,
-                                           this.employeeForm.value.empLastName,
-                                           this.employeeForm.value.empEmailId,
-                                           this.employeeForm.value.employeeId,
-                                           this.employeeForm.value.description,
-                                           this.employeeForm.value.image );
+        this.employeeForm.value.empLastName,
+        this.employeeForm.value.empEmailId,
+        this.employeeForm.value.employeeId,
+        this.employeeForm.value.description,
+        this.employeeForm.value.image);
     }
     this.employeeForm.reset();
   }

@@ -17,10 +17,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authStatusSubscription = this.authService.getAuthStatusListener().subscribe(
       authStatus => {
-          this.isLoading = false;
+        this.isLoading = false;
       }
     );
-   }
+  }
 
   onLogin(loginForm: NgForm) {
     //  console.log(loginForm.value);

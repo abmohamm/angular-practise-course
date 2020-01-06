@@ -77,7 +77,7 @@ export class AuthService {
   autoAuthenticateUser() {
     const authenticationInformation = this.getAuthenticationData();
     if (!authenticationInformation) {
-        return;
+      return;
     }
     const now = new Date();
     // const isInFuture = authInformation.expirationDate > now;

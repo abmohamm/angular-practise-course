@@ -4,7 +4,7 @@
 } */
 
 mat-form-field,
-textarea{
+textarea {
   width: 100%;
 }
 
@@ -13,7 +13,7 @@ mat-spinner {
 }
 
 input[type="file"] {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .file-preview {
