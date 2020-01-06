@@ -29,36 +29,38 @@ const storage = multer.diskStorage({
 });
 
 
-router.post("",
-            checkAuth,
-            multer({storage: storage}).single("image"),
-            (request,response,next) => {
-  //  const employee = request.body;
-  const url = request.protocol + '://' + request.get("host");
-  const employee = new Employee({firstname: request.body.firstname,
-                                 lastname: request.body.lastname,
-                                 email: request.body.email,
-                                 jobid: request.body.jobid,
-                                 description: request.body.description,
-                                 imagePath: url + "/images" + request.file.filename,
-                                 creator: request.userData.userId});
-  console.log("Employee Details : " + employee);
-  employee.save()   // This Command will insert a document into database.
-          .then(createdEmployee => {
-            response.status(201).json({
-              message: "Records stored successfully",
-              status: "OK",
-              employee: {
-                  // ...createdEmployee,
-                  employeeId: createdEmployee.employeeId,
-                  empFirstName: createdEmployee.empFirstName,
-                  empLastName: createdEmployee.empLastName,
-                  empEmailId: createdEmployee.empEmailId,
-                  description: createdEmployee.description,
-                  imagePath: createdEmployee.imagePath
-              }
-          });
-    });
+router.post("", checkAuth, multer({storage: storage}).single("image"), (request,response,next) => {
+          //  const employee = request.body;
+          const url = request.protocol + '://' + request.get("host");
+          const employee = new Employee({firstname: request.body.firstname,
+                                        lastname: request.body.lastname,
+                                        email: request.body.email,
+                                        jobid: request.body.jobid,
+                                        description: request.body.description,
+                                        imagePath: url + "/images" + request.file.filename,
+                                        creator: request.userData.userId});
+          console.log("Employee Details : " + employee);
+          employee.save()   // This Command will insert a document into database.
+                  .then(createdEmployee => {
+                    response.status(201).json({
+                      message: "Records stored successfully",
+                      status: "OK",
+                      employee: {
+                          // ...createdEmployee,
+                          employeeId: createdEmployee.employeeId,
+                          empFirstName: createdEmployee.empFirstName,
+                          empLastName: createdEmployee.empLastName,
+                          empEmailId: createdEmployee.empEmailId,
+                          description: createdEmployee.description,
+                          imagePath: createdEmployee.imagePath
+                      }
+                  });
+            })
+            .catch(error => {
+                response.status(500).json({
+                      message: 'Adding Information Process Failed!!!'
+                });
+        });
 });
 
 router.put("/:employeeId", checkAuth, multer({storage: storage}).single("image"), (request, response, next) => {
@@ -75,22 +77,27 @@ router.put("/:employeeId", checkAuth, multer({storage: storage}).single("image")
                                                     description: request.body.description,
                                                     imagePath: imagePath,
                                                     creator: request.userData.userId});
-  Employee.updateOne({_id: request.params.employeeId, creator: request.userData.userId}, employee)
-          .then(result => {
-              console.log("Employee Details : "+result);
-              if (result.nModified > 0) {
-                  response.status(200).json({
-                    message: "Records Updated Successfully",
-                    status: "OK"
-                });
-              }
-              else{
-                  response.status(401).json({
-                    message: "Not Authorized to Edit/update",
-                    status: "BAD AUTHENTICATION REQUEST"
-                });
-              }
-      });
+                      Employee.updateOne({_id: request.params.employeeId, creator: request.userData.userId}, employee)
+                              .then(result => {
+                                  console.log("Employee Details : "+result);
+                                  if (result.nModified > 0) {
+                                      response.status(200).json({
+                                        message: "Records Updated Successfully",
+                                        status: "OK"
+                                    });
+                                  }
+                                  else{
+                                      response.status(401).json({
+                                        message: "Not Authorized to Edit/update",
+                                        status: "BAD AUTHENTICATION REQUEST"
+                                    });
+                                }
+                          })
+                          .catch(error => {
+                            response.status(500).json({
+                              message: 'Updating Information Process Failed!!!'
+                          });
+             });
 });
 
 router.get("", (request,response,next) => {
@@ -113,6 +120,11 @@ router.get("", (request,response,next) => {
         employees: fetchedEmployees,
         maxEmployees: count
         });
+    })
+    .catch(error => {
+      response.status(500).json({
+        message: 'Fetching Information Process Failed!!!'
+        });
     });
 });
 
@@ -126,6 +138,11 @@ router.get("/:employeeId", (request, response, next) => {
                         message: "Records Not Found"
                       });
                 }
+        })
+        .catch(error => {
+          response.status(500).json({
+            message: 'Fetching Information Process Failed!!!'
+            });
         });
 });
 
@@ -147,6 +164,11 @@ router.delete("/:employeeId",
                   status: "BAD AUTHENTICATION REQUEST"
               });
           }
+    })
+    .catch(error => {
+      response.status(500).json({
+        message: 'Deleting Information Process Failed!!!'
+        });
     });
 });
 

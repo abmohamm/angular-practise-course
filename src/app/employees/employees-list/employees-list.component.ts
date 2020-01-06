@@ -60,6 +60,8 @@ export class EmployeesListComponent implements OnInit, OnDestroy {
     this.employeesService.deleteEmployee(employeeId)
                     .subscribe(() => {
                      this.employeesService.getEmployees(this.employeesPerPage, this.currentPage);
+                  }, () => {
+                     this.isLoading = false;
                   });
   }
 
