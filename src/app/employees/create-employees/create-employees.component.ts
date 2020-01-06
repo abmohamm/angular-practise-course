@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { EmployeesService } from '../employees.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Employee } from '../employee.model';
 import { mimeType } from './mime-type.validator';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-create-employees',
   templateUrl: './create-employees.component.html',
   styleUrls: ['./create-employees.component.css']
 })
-export class CreateEmployeesComponent implements OnInit {
+export class CreateEmployeesComponent implements OnInit, OnDestroy {
   // @Output() employeeCreated = new EventEmitter<Employee>();
   empFirstName = '';
   empLastName = '';
@@ -24,11 +26,18 @@ export class CreateEmployeesComponent implements OnInit {
   filePreview: string;
   private mode = 'create';
   private empId: string;
+  private authStatusSubscription: Subscription;
 
-  constructor(employeesService: EmployeesService, public route: ActivatedRoute) {
-    this.employeesService = employeesService;
+
+  constructor(employeesService: EmployeesService,
+              public route: ActivatedRoute,
+              public authService: AuthService) {
   }
   ngOnInit() {
+    this.authStatusSubscription = this.authService.getAuthStatusListener().subscribe(
+      authStatus => {
+        this.isLoading = false;
+    });
     this.employeeForm = new FormGroup({
       empFirstName: new FormControl(null, { validators: [Validators.required, Validators.minLength(10)] }),
       empLastName: new FormControl(null, { validators: [Validators.required] }),
@@ -117,5 +126,9 @@ export class CreateEmployeesComponent implements OnInit {
         this.employeeForm.value.image);
     }
     this.employeeForm.reset();
+  }
+
+  ngOnDestroy() {
+    this.authStatusSubscription.unsubscribe();
   }
 }
