@@ -3,13 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import {
-  MatInputModule, MatCardModule,
-  MatButtonModule, MatToolbarModule,
-  MatExpansionModule, MatProgressSpinnerModule,
-  MatPaginatorModule,
-  MatDialogModule
-} from '@angular/material';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +16,7 @@ import { SignUpComponent } from './auth/signup/sign-up.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
+import { AngularMaterialModule } from './angular-material.module';
 
 
 @NgModule({
@@ -35,9 +30,13 @@ import { ErrorComponent } from './error/error.component';
     ErrorComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, BrowserAnimationsModule,
-    MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,
-    MatExpansionModule, MatProgressSpinnerModule, MatPaginatorModule, MatDialogModule, HttpClientModule
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AngularMaterialModule
   ],
   // providers: [EmployeesService],
   // providers: [EmployeesService],
