@@ -16,6 +16,7 @@ exports.createEmployee = (request, response, next) => {
   console.log("Employee Details : " + employee);
   employee.save()   // This Command will insert a document into database.
     .then(createdEmployee => {
+      console.log("Employee Details : " + createdEmployee);
       response.status(201).json({
         message: "Records stored successfully",
         status: "OK",
@@ -53,10 +54,11 @@ exports.updateEmployee = (request, response, next) => {
     imagePath: imagePath,
     creator: request.userData.userId
   });
+  console.log("Employee Details : " + employee);
   Employee.updateOne({ _id: request.params.employeeId, creator: request.userData.userId }, employee)
     .then(result => {
       console.log("Employee Details : " + result);
-      if (result.nModified > 0) {
+      if (result.n > 0) {
         response.status(200).json({
           message: "Records Updated Successfully",
           status: "OK"
@@ -90,6 +92,7 @@ exports.getEmployees = (request, response, next) => {
     fetchedEmployees = documents;
     return Employee.count();
   }).then(count => {
+    console.log("Employee Count : " + count);
     response.status(200).json({
       message: "Records retrieved successfully",
       status: "OK",
@@ -108,6 +111,7 @@ exports.getEmployee = (request, response, next) => {
   Employee.findById(request.params.employeeId)
     .then(employee => {
       if (employee) {
+        console.log("Employee Details : " + employee);
         response.status(200).json(employee);
       } else {
         response.status(404).json({
