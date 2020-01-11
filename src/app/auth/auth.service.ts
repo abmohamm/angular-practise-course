@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +17,6 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private isAuthenticated = false;
   private userId: string;
-
-  SIGN_UP_API_URL: 'http://localhost:3000/api/user/signup';
-  LOGIN_API_URL: 'http://localhost:3000/api/user/login';
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -39,7 +38,7 @@ export class AuthService {
 
   createUser(userEmail: string, userPassword: string) {
     const authData: AuthData = { email: userEmail, password: userPassword };
-    this.http.post(this.SIGN_UP_API_URL, authData)
+    this.http.post(environment.signupUrl, authData)
       .subscribe((response) => {
         console.log(response);
         this.router.navigate(['/']);
@@ -51,9 +50,9 @@ export class AuthService {
 
   login(userEmail: string, userPassword: string) {
     const authData: AuthData = { email: userEmail, password: userPassword };
-    this.http.post<{ token: string, expiresIn: number, userId: string }>(this.LOGIN_API_URL, authData)
+    this.http.post<{ token: string, expiresIn: number, userId: string }>(environment.loginUrl, authData)
       .subscribe(response => {
-        // console.log(response);
+        console.log(response);
         const token = response.token;
         this.token = token;
         if (token) {

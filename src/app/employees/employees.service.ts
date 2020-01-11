@@ -4,13 +4,11 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+const BACKEND_URL = environment.apiUrl + '/employees/';
+@Injectable({ providedIn: 'root' })
 export class EmployeesService {
-
-  API_URL: 'http://localhost:3000/api/employees';
 
   private employees: Employee[] = [];
   private employeesUpdated = new Subject<{ employees: Employee[], employeeCount: number }>();
@@ -22,7 +20,7 @@ export class EmployeesService {
   getEmployees(employeesPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${employeesPerPage}&page=${currentPage}`;
 
-    this.http.get<{ message: string, status: string, employees: any, maxEmployees: number }>(this.API_URL + queryParams)
+    this.http.get<{ message: string, status: string, employees: any, maxEmployees: number }>(BACKEND_URL + queryParams)
       .pipe(map((employeeData) => {
         return {
           employees: employeeData.employees.map(employee => {
@@ -58,7 +56,7 @@ export class EmployeesService {
     return this.http.get<{
       empFirstName: string, empLastName: string, empEmailId: string,
       employeeId: string, description: string, imagePath: string, creator: string
-    }>(this.API_URL + empId);
+    }>(BACKEND_URL + empId);
   }
 
   addEmployee(empFName: string, empLName: string, empEmaId: string, empId: string, descriptionn: string, image: File) {
@@ -71,7 +69,7 @@ export class EmployeesService {
     employeeData.append('employeeId', empId);
     employeeData.append('description', descriptionn);
     employeeData.append('image', image);
-    this.http.post<{ message: string, status: string, employee: Employee }>(this.API_URL, employeeData)
+    this.http.post<{ message: string, status: string, employee: Employee }>(BACKEND_URL, employeeData)
       .subscribe((responseData) => {
         // const employee: Employee = {
         //   empFirstName: responseData.employee.empFirstName,
@@ -90,7 +88,7 @@ export class EmployeesService {
   }
 
   updateEmployee(employeeFirstName: string, employeeLastName: string, employeeEmailId: string,
-    empId: string, employeeDescription: string, image: File | string) {
+                 empId: string, employeeDescription: string, image: File | string) {
     let employeeData: Employee | FormData;
     if (typeof (image) === 'object') {
       employeeData = new FormData();
@@ -111,7 +109,7 @@ export class EmployeesService {
         creator: null
       };
     }
-    this.http.put(this.API_URL + empId, employeeData)
+    this.http.put(BACKEND_URL + empId, employeeData)
       .subscribe((responseData) => {
         const updatedEmployees = [...this.employees];
         const oldEmployeeIndex = updatedEmployees.findIndex(p => p.employeeId === empId);
@@ -129,7 +127,7 @@ export class EmployeesService {
   }
 
   deleteEmployee(employeeId: string) {
-    return this.http.delete(this.API_URL + employeeId);
+    return this.http.delete(BACKEND_URL + employeeId);
     // .subscribe(() => {
     //     const updatedEmployees = this.employees.filter(employee => employee.employeeId !== employeeId);
     //     this.employees = updatedEmployees;
