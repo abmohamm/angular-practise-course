@@ -1,6 +1,6 @@
 const http = require('http');
-const debug = require('debug');
-const app = require('./node-backend-app/app');
+const debug = require('debug')('node-angular');
+const app = require('./app');
 
 const port = process.env.PORT || "3000";
 

@@ -1,9 +1,9 @@
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 exports.createUser = (request, response, next) => {
-  bcrypt.hash(request.body.password, 10)
+  bcryptjs.hash(request.body.password, 10)
     .then(hash => {
       const user = new User({
         email: request.body.email,
@@ -34,7 +34,7 @@ exports.userLogin = (request, response, next) => {
         });
       }
       fetchedUser = user;
-      return bcrypt.compare(request.body.password, user.password);
+      return bcryptjs.compare(request.body.password, user.password);
     })
     .then(result => {
       if (!result) {
