@@ -11,8 +11,21 @@ const BACKEND_URL = environment.apiUrl + '/employees/';
 export class EmployeesService {
 
   private employees: Employee[] = [];
+<<<<<<< Updated upstream
   private employeesUpdated = new Subject<{ employees: Employee[], employeeCount: number }>();
   constructor(private http: HttpClient, private router: Router) { }
+=======
+  private employeesUpdated = new Subject<Employee[]>();
+  constructor() { }
+
+//  Below return statement returns copy of original employees array declared as private.
+//  Adding/Removing elements to/from below returning array will not effect original
+//  private array - suggested approach
+// return [...this.employees];
+    getEmployees() {
+        return this.employees;
+    }
+>>>>>>> Stashed changes
 
   //  Below method returns copy of original employees array declared as private.
   //  Adding/Removing elements to/from below returning array will not effect original

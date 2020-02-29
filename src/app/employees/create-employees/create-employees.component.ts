@@ -110,6 +110,7 @@ export class CreateEmployeesComponent implements OnInit, OnDestroy {
     /* const employee = { empFirstName: employeeForm.value.empFirstName,
   empLastName: employeeForm.value.empLastName, empEmailId: employeeForm.value.empEmailId,
   employeeId: employeeForm.value.employeeId, description: employeeForm.value.description }; */
+<<<<<<< Updated upstream
     if (this.mode === 'create') {
       this.employeesService.addEmployee(this.employeeForm.value.empFirstName,
         this.employeeForm.value.empLastName,
@@ -130,5 +131,11 @@ export class CreateEmployeesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authStatusSubscription.unsubscribe();
+=======
+    this.employeesService.addEmployee( employeeForm.value.empFirstName, employeeForm.value.empLastName,
+                                       employeeForm.value.empEmailId, employeeForm.value.employeeId,
+                                       employeeForm.value.description );
+    employeeForm.reset();
+>>>>>>> Stashed changes
   }
 }

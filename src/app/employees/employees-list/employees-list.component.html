@@ -6,6 +6,7 @@
     <mat-expansion-panel-header>
       <p><b>{{ employee.empFirstName }}'s Details</b></p>
     </mat-expansion-panel-header>
+<<<<<<< Updated upstream
     <div class="employee-image">
       <img [src]="employee.imagePath" [alt]="employee.empFirstName">
     </div>
@@ -17,6 +18,16 @@
     <mat-action-row *ngIf="isUserAuthenticated && userId === employee.creator">
       <button mat-button color="primary" [routerLink]="['/edit',employee.employeeId]">Edit</button>
       <button mat-button color="warn" (click)="onDelete(employee.employeeId)">Delete</button>
+=======
+    <p><b>First Name : {{ employee.empFirstName }}</b></p>
+    <p><b>Last Name : {{ employee.empLastName }}</b></p>
+    <p><b>Email : {{ employee.empEmailId }}</b></p>
+    <p><b>Job Id : {{ employee.employeeId }}</b></p>
+    <p><b>Description : {{ employee.description}}</b></p>
+    <mat-action-row>
+      <button mat-button color="primary">Edit</button>
+      <button mat-button color="warn">Delete</button>
+>>>>>>> Stashed changes
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
